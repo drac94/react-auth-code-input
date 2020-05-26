@@ -6,12 +6,13 @@ var React__default = _interopDefault(React);
 var AuthCode = function AuthCode(_ref) {
   var _ref$characters = _ref.characters,
       characters = _ref$characters === void 0 ? 6 : _ref$characters,
+      _ref$allowedCharacter = _ref.allowedCharacters,
+      allowedCharacters = _ref$allowedCharacter === void 0 ? '^[A-Za-z0-9]*$' : _ref$allowedCharacter,
       onChange = _ref.onChange,
       password = _ref.password,
       inputStyle = _ref.inputStyle,
       containerStyle = _ref.containerStyle;
   var inputsRef = React.useRef([]);
-  var regex = '^[A-Za-z0-9]*$';
   React.useEffect(function () {
     inputsRef.current[0].focus();
   }, []);
@@ -24,7 +25,7 @@ var AuthCode = function AuthCode(_ref) {
   };
 
   var handleOnChange = function handleOnChange(e) {
-    if (e.target.value.match(regex)) {
+    if (e.target.value.match(allowedCharacters)) {
       if (e.target.nextElementSibling !== null) {
         e.target.nextElementSibling.focus();
       }
@@ -59,7 +60,7 @@ var AuthCode = function AuthCode(_ref) {
   var handleOnPaste = function handleOnPaste(e) {
     var value = e.clipboardData.getData('Text');
 
-    if (value.match(regex)) {
+    if (value.match(allowedCharacters)) {
       for (var i = 0; i < characters && i < value.length; i++) {
         inputsRef.current[i].value = value.charAt(i);
 

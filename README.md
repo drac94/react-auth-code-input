@@ -55,6 +55,11 @@ const App = () => {
   - The number of inputs to display.
   - Default Value: 6
 
+- `allowedCharacters: String`
+  - **Optional**
+  - Regex for allowed characters.
+  - Default Value: "^[A-Za-z0-9]"
+
 - `password: Boolean` 
   - **Optional**
   - If preseent changes the type of the input to password, by default is set to text.

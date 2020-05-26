@@ -2,13 +2,13 @@ import React, { useRef, useEffect } from 'react';
 
 const AuthCode = ({
   characters: _characters = 6,
+  allowedCharacters: _allowedCharacters = '^[A-Za-z0-9]*$',
   onChange,
   password,
   inputStyle,
   containerStyle
 }) => {
   const inputsRef = useRef([]);
-  const regex = '^[A-Za-z0-9]*$';
   useEffect(() => {
     inputsRef.current[0].focus();
   }, []);
@@ -19,7 +19,7 @@ const AuthCode = ({
   };
 
   const handleOnChange = e => {
-    if (e.target.value.match(regex)) {
+    if (e.target.value.match(_allowedCharacters)) {
       if (e.target.nextElementSibling !== null) {
         e.target.nextElementSibling.focus();
       }
@@ -56,7 +56,7 @@ const AuthCode = ({
   const handleOnPaste = e => {
     const value = e.clipboardData.getData('Text');
 
-    if (value.match(regex)) {
+    if (value.match(_allowedCharacters)) {
       for (let i = 0; i < _characters && i < value.length; i++) {
         inputsRef.current[i].value = value.charAt(i);
 
