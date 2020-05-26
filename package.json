@@ -1,7 +1,7 @@
 {
   "name": "react-auth-code-input",
   "version": "1.0.0",
-  "description": "Made with create-react-library",
+  "description": "A React Component for inputting Auth Codes inspired in Apple Two-Factor Authentication UI. It allows deleting using the backspace and pasting as well",
   "author": "drac94",
   "license": "MIT",
   "repository": "drac94/react-auth-code-input",
@@ -50,5 +50,12 @@
   },
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "auth",
+    "react",
+    "2FA",
+    "apple",
+    "input"
   ]
 }
