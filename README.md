@@ -50,28 +50,14 @@ const App = () => {
 
 ### Props
 
-- `characters: Number`
-  - **Optional**
-  - The number of inputs to display.
-  - Default Value: 6
-
-- `allowedCharacters: String`
-  - **Optional**
-  - Regex for allowed characters.
-  - Default Value: "^[A-Za-z0-9]"
-
-- `password: Boolean` 
-  - **Optional**
-  - If preseent changes the type of the input to password, by default is set to text.
-  - Default Value = false
-
-- `inputStyle: Object` 
-  - **Optional**
-  - The styles to be applied to each input.
-
-- `containerStyle: Object` 
-  - **Optional**
-  - The styles to be applied to the inputs container.
+| Prop | Type | Description | Default Value |
+| :--- | :--- | :--- | :--- |
+| `characters` | Number | The number of inputs to display | 6 |
+| `allowedCharacters` | String | Regex for allowed characters | `^[A-Za-z0-9]` |
+| `password` | Boolean | If present changes the type of the input to password, by default is set to text | False |
+| `inputStyle` | Object | The styles to be applied to each input | |
+| `containerStyle` | Object | The styles to be applied to each input | |
+| `onChange` | Function(value: String) | Callback function called every time an input value changes | |
 
 ## Changelog
 
