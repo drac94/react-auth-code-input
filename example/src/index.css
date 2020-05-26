@@ -6,9 +6,34 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(20deg, rgb(219, 112, 147), rgb(218, 163, 87))
+    no-repeat fixed;
+  background-repeat: no-repeat;
+  text-align: center;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.badges > * {
+  margin-right: 8px;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  display: block;
+  margin-bottom: 12px;
+  margin-top: 1em;
+  background: rgba(255, 255, 255, 0.2);
+  white-space: pre;
+  text-align: left;
+  color: rgb(255, 255, 255);
+  padding: 12px;
+}
+
+a {
+  color: white;
 }

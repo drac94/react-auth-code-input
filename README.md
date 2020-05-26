@@ -1,11 +1,17 @@
+![image](https://user-images.githubusercontent.com/1719915/82956329-2f7e8700-9f76-11ea-978f-ec7135c79311.png)
+
 # React Auth Code Input
 
-> A React Component for inputting Auth Codes inspired in Apple Two-Factor Authentication UI.
+> A React Component for inputting Auth Codes inspired in Apple Two-Factor Authentication UI. It allows deleting using the backspace and pasting as well.
 
 [![NPM](https://img.shields.io/npm/v/react-auth-code-input.svg)](https://www.npmjs.com/package/react-auth-code-input) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
 [![npm](https://img.shields.io/npm/dt/react-auth-code-input.svg)](https://www.npmjs.com/package/react-auth-code-input)
 [![npm](https://img.shields.io/npm/dw/react-auth-code-input.svg)](https://www.npmjs.com/package/react-auth-code-input)
+
+## Demo
+
+[Demo](https://www.luisguerrero.me/react-auth-code-input/)
 
 ## Install
 
