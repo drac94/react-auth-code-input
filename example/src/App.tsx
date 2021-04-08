@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-import AuthCode from 'react-auth-code-input'
-import './index.css'
+import AuthCode from 'react-auth-code-input';
+import './index.css';
 
 const App = () => {
   return (
@@ -46,7 +46,7 @@ const App = () => <AuthCode />
       </code>
       <h2>Custom Styles</h2>
       <p>
-        Try writting and then deleting characters using backspace.
+        Try writing and then deleting characters using backspace.
         <br />
         Pasting works too!, as long as the text copied matches the allowed
         characters.
@@ -93,7 +93,7 @@ const App = () => {
         `}
       </code>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

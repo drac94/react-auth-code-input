@@ -1,13 +1,13 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react';
 
 type Props = {
-  characters?: number
-  allowedCharacters?: RegExp
-  onChange?: (res: string) => void
-  password?: boolean
-  inputStyle?: React.CSSProperties
-  containerStyle?: React.CSSProperties
-}
+  characters?: number;
+  allowedCharacters?: RegExp;
+  onChange?: (res: string) => void;
+  password?: boolean;
+  inputStyle?: React.CSSProperties;
+  containerStyle?: React.CSSProperties;
+};
 
 const AuthCode: React.FC<Props> = ({
   characters = 6,
@@ -17,64 +17,63 @@ const AuthCode: React.FC<Props> = ({
   inputStyle,
   containerStyle
 }) => {
-  const inputsRef = useRef<Array<HTMLInputElement>>([])
+  const inputsRef = useRef<Array<HTMLInputElement>>([]);
 
   useEffect(() => {
-    inputsRef.current[0].focus()
-  }, [])
+    inputsRef.current[0].focus();
+  }, []);
 
   const sendResult = () => {
-    const res = inputsRef.current.map((input) => input.value).join('')
-    onChange && onChange(res)
-  }
+    const res = inputsRef.current.map((input) => input.value).join('');
+    onChange && onChange(res);
+  };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.match(allowedCharacters)) {
       if (e.target.nextElementSibling !== null) {
-        ;(e.target.nextElementSibling as HTMLInputElement)?.focus()
+        (e.target.nextElementSibling as HTMLInputElement).focus();
       }
     } else {
-      e.target.value = ''
+      e.target.value = '';
     }
-    sendResult()
-  }
+    sendResult();
+  };
 
   const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const { key } = e
-    const target = e.target as HTMLInputElement
+    const { key } = e;
+    const target = e.target as HTMLInputElement;
     if (key === 'Backspace') {
       if (target.value === '' && target.previousElementSibling !== null) {
         if (target.previousElementSibling !== null) {
-          ;(target.previousElementSibling as HTMLInputElement)?.focus()
-          e.preventDefault()
+          (target.previousElementSibling as HTMLInputElement).focus();
+          e.preventDefault();
         }
       } else {
-        target.value = ''
+        target.value = '';
       }
-      sendResult()
+      sendResult();
     }
-  }
+  };
 
   const handleOnFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.target.select()
-  }
+    e.target.select();
+  };
 
   const handleOnPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    const value = e.clipboardData.getData('Text')
+    const value = e.clipboardData.getData('Text');
     if (value.match(allowedCharacters)) {
       for (let i = 0; i < characters && i < value.length; i++) {
-        inputsRef.current[i].value = value.charAt(i)
+        inputsRef.current[i].value = value.charAt(i);
         if (inputsRef.current[i].nextElementSibling !== null) {
-          ;(inputsRef.current[i]
-            .nextElementSibling as HTMLInputElement)?.focus()
+          (inputsRef.current[i].nextElementSibling as HTMLInputElement).focus();
         }
       }
-      sendResult()
+      sendResult();
     }
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
-  const inputs = []
+  const inputs = [];
   for (let i = 0; i < characters; i++) {
     inputs.push(
       <input
@@ -88,10 +87,10 @@ const AuthCode: React.FC<Props> = ({
         maxLength={1}
         style={inputStyle}
       />
-    )
+    );
   }
 
-  return <div style={containerStyle}>{inputs}</div>
-}
+  return <div style={containerStyle}>{inputs}</div>;
+};
 
-export default AuthCode
+export default AuthCode;

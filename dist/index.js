@@ -27,8 +27,7 @@ var AuthCode = function AuthCode(_ref) {
   var handleOnChange = function handleOnChange(e) {
     if (e.target.value.match(allowedCharacters)) {
       if (e.target.nextElementSibling !== null) {
-        var _e$target$nextElement;
-        (_e$target$nextElement = e.target.nextElementSibling) === null || _e$target$nextElement === void 0 ? void 0 : _e$target$nextElement.focus();
+        e.target.nextElementSibling.focus();
       }
     } else {
       e.target.value = '';
@@ -44,8 +43,7 @@ var AuthCode = function AuthCode(_ref) {
     if (key === 'Backspace') {
       if (target.value === '' && target.previousElementSibling !== null) {
         if (target.previousElementSibling !== null) {
-          var _target$previousEleme;
-          (_target$previousEleme = target.previousElementSibling) === null || _target$previousEleme === void 0 ? void 0 : _target$previousEleme.focus();
+          target.previousElementSibling.focus();
           e.preventDefault();
         }
       } else {
@@ -68,8 +66,7 @@ var AuthCode = function AuthCode(_ref) {
         inputsRef.current[i].value = value.charAt(i);
 
         if (inputsRef.current[i].nextElementSibling !== null) {
-          var _inputsRef$current$i$;
-          (_inputsRef$current$i$ = inputsRef.current[i].nextElementSibling) === null || _inputsRef$current$i$ === void 0 ? void 0 : _inputsRef$current$i$.focus();
+          inputsRef.current[i].nextElementSibling.focus();
         }
       }
 
