@@ -28,8 +28,8 @@ yarn add react-auth-code-input
 ## Usage
 
 ```jsx
-import React from 'react'
-import AuthCode from 'react-auth-code-input'
+import React from 'react';
+import AuthCode from 'react-auth-code-input';
 
 const App = () => {
   return (
@@ -49,23 +49,26 @@ const App = () => {
         textTransform: 'uppercase'
       }}
     />
-  )
-}
+  );
+};
 ```
-
 
 ### Props
 
-| Prop | Type | Description | Default Value |
-| :--- | :--- | :--- | :--- |
-| `characters` | Number | The number of inputs to display | 6 |
-| `allowedCharacters` | String | Regex for allowed characters | `^[A-Za-z0-9]` |
-| `password` | Boolean | If present changes the type of the input to password, by default is set to text | False |
-| `inputStyle` | Object | The styles to be applied to each input | |
-| `containerStyle` | Object | The styles to be applied to each input | |
-| `onChange` | Function(value: String) | Callback function called every time an input value changes | |
+| Prop                | Type                    | Description                                                                     | Default Value  |
+| :------------------ | :---------------------- | :------------------------------------------------------------------------------ | :------------- |
+| `characters`        | Number                  | The number of inputs to display                                                 | 6              |
+| `allowedCharacters` | String                  | Regex for allowed characters                                                    | `^[A-Za-z0-9]` |
+| `password`          | Boolean                 | If present changes the type of the input to password, by default is set to text | False          |
+| `inputStyle`        | Object                  | The styles to be applied to each input                                          |                |
+| `containerStyle`    | Object                  | The styles to be applied to each input                                          |                |
+| `onChange`          | Function(value: String) | Callback function called every time an input value changes                      |                |
 
 ## Changelog
+
+### 1.1.0
+
+- Typescript support.
 
 ### 1.0.0
 
