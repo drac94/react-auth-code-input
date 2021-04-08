@@ -8,11 +8,26 @@ const App = () => {
     <div className='main'>
       <h1>React Auth Code Input</h1>
       <div className='badges'>
-        <img src='https://img.shields.io/npm/v/react-auth-code-input.svg' />
-        <img src='https://img.shields.io/badge/code_style-standard-brightgreen.svg' />
-        <img src='https://img.shields.io/badge/license-MIT-brightgreen.svg' />
-        <img src='https://img.shields.io/npm/dt/react-auth-code-input.svg' />
-        <img src='https://img.shields.io/npm/dw/react-auth-code-input.svg' />
+        <img
+          alt=''
+          src='https://img.shields.io/npm/v/react-auth-code-input.svg'
+        />
+        <img
+          alt='code style standard'
+          src='https://img.shields.io/badge/code_style-standard-brightgreen.svg'
+        />
+        <img
+          alt='license MIT'
+          src='https://img.shields.io/badge/license-MIT-brightgreen.svg'
+        />
+        <img
+          alt=''
+          src='https://img.shields.io/npm/dt/react-auth-code-input.svg'
+        />
+        <img
+          alt=''
+          src='https://img.shields.io/npm/dw/react-auth-code-input.svg'
+        />
       </div>
       <p>
         <a href='https://github.com/drac94/react-auth-code-input'>

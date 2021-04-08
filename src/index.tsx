@@ -1,6 +1,15 @@
 import React, { useRef, useEffect } from 'react'
 
-const AuthCode = ({
+type Props = {
+  characters?: number
+  allowedCharacters?: RegExp
+  onChange?: (res: string) => void
+  password?: boolean
+  inputStyle?: React.CSSProperties
+  containerStyle?: React.CSSProperties
+}
+
+const AuthCode: React.FC<Props> = ({
   characters = 6,
   allowedCharacters = '^[A-Za-z0-9]*$',
   onChange,
@@ -8,7 +17,7 @@ const AuthCode = ({
   inputStyle,
   containerStyle
 }) => {
-  const inputsRef = useRef([])
+  const inputsRef = useRef<Array<HTMLInputElement>>([])
 
   useEffect(() => {
     inputsRef.current[0].focus()
@@ -19,10 +28,10 @@ const AuthCode = ({
     onChange && onChange(res)
   }
 
-  const handleOnChange = (e) => {
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.match(allowedCharacters)) {
       if (e.target.nextElementSibling !== null) {
-        e.target.nextElementSibling.focus()
+        ;(e.target.nextElementSibling as HTMLInputElement)?.focus()
       }
     } else {
       e.target.value = ''
@@ -30,32 +39,34 @@ const AuthCode = ({
     sendResult()
   }
 
-  const handleOnKeyDown = (e) => {
+  const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const { key } = e
+    const target = e.target as HTMLInputElement
     if (key === 'Backspace') {
-      if (e.target.value === '' && e.target.previousElementSibling !== null) {
-        if (e.target.previousElementSibling !== null) {
-          e.target.previousElementSibling.focus()
+      if (target.value === '' && target.previousElementSibling !== null) {
+        if (target.previousElementSibling !== null) {
+          ;(target.previousElementSibling as HTMLInputElement)?.focus()
           e.preventDefault()
         }
       } else {
-        e.target.value = ''
+        target.value = ''
       }
       sendResult()
     }
   }
 
-  const handleOnFocus = (e) => {
+  const handleOnFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     e.target.select()
   }
 
-  const handleOnPaste = (e) => {
+  const handleOnPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     const value = e.clipboardData.getData('Text')
     if (value.match(allowedCharacters)) {
       for (let i = 0; i < characters && i < value.length; i++) {
         inputsRef.current[i].value = value.charAt(i)
         if (inputsRef.current[i].nextElementSibling !== null) {
-          inputsRef.current[i].nextElementSibling.focus()
+          ;(inputsRef.current[i]
+            .nextElementSibling as HTMLInputElement)?.focus()
         }
       }
       sendResult()
@@ -73,7 +84,7 @@ const AuthCode = ({
         onFocus={handleOnFocus}
         onPaste={handleOnPaste}
         type={password ? 'password' : 'text'}
-        ref={(el) => (inputsRef.current[i] = el)}
+        ref={(el: HTMLInputElement) => (inputsRef.current[i] = el)}
         maxLength={1}
         style={inputStyle}
       />

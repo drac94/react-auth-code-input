@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react';
 
 const AuthCode = ({
   characters: _characters = 6,
@@ -8,93 +8,93 @@ const AuthCode = ({
   inputStyle,
   containerStyle
 }) => {
-  const inputsRef = useRef([])
+  const inputsRef = useRef([]);
   useEffect(() => {
-    inputsRef.current[0].focus()
-  }, [])
+    inputsRef.current[0].focus();
+  }, []);
 
   const sendResult = () => {
-    const res = inputsRef.current.map((input) => input.value).join('')
-    onChange && onChange(res)
-  }
+    const res = inputsRef.current.map(input => input.value).join('');
+    onChange && onChange(res);
+  };
 
-  const handleOnChange = (e) => {
+  const handleOnChange = e => {
     if (e.target.value.match(_allowedCharacters)) {
       if (e.target.nextElementSibling !== null) {
-        e.target.nextElementSibling.focus()
+        var _e$target$nextElement;
+        (_e$target$nextElement = e.target.nextElementSibling) === null || _e$target$nextElement === void 0 ? void 0 : _e$target$nextElement.focus();
       }
     } else {
-      e.target.value = ''
+      e.target.value = '';
     }
 
-    sendResult()
-  }
+    sendResult();
+  };
 
-  const handleOnKeyDown = (e) => {
-    const { key } = e
+  const handleOnKeyDown = e => {
+    const {
+      key
+    } = e;
+    const target = e.target;
 
     if (key === 'Backspace') {
-      if (e.target.value === '' && e.target.previousElementSibling !== null) {
-        if (e.target.previousElementSibling !== null) {
-          e.target.previousElementSibling.focus()
-          e.preventDefault()
+      if (target.value === '' && target.previousElementSibling !== null) {
+        if (target.previousElementSibling !== null) {
+          var _target$previousEleme;
+          (_target$previousEleme = target.previousElementSibling) === null || _target$previousEleme === void 0 ? void 0 : _target$previousEleme.focus();
+          e.preventDefault();
         }
       } else {
-        e.target.value = ''
+        target.value = '';
       }
 
-      sendResult()
+      sendResult();
     }
-  }
+  };
 
-  const handleOnFocus = (e) => {
-    e.target.select()
-  }
+  const handleOnFocus = e => {
+    e.target.select();
+  };
 
-  const handleOnPaste = (e) => {
-    const value = e.clipboardData.getData('Text')
+  const handleOnPaste = e => {
+    const value = e.clipboardData.getData('Text');
 
     if (value.match(_allowedCharacters)) {
       for (let i = 0; i < _characters && i < value.length; i++) {
-        inputsRef.current[i].value = value.charAt(i)
+        inputsRef.current[i].value = value.charAt(i);
 
         if (inputsRef.current[i].nextElementSibling !== null) {
-          inputsRef.current[i].nextElementSibling.focus()
+          var _inputsRef$current$i$;
+          (_inputsRef$current$i$ = inputsRef.current[i].nextElementSibling) === null || _inputsRef$current$i$ === void 0 ? void 0 : _inputsRef$current$i$.focus();
         }
       }
 
-      sendResult()
+      sendResult();
     }
 
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
-  const inputs = []
+  const inputs = [];
 
   for (let i = 0; i < _characters; i++) {
-    inputs.push(
-      /*#__PURE__*/ React.createElement('input', {
-        key: i,
-        onChange: handleOnChange,
-        onKeyDown: handleOnKeyDown,
-        onFocus: handleOnFocus,
-        onPaste: handleOnPaste,
-        type: password ? 'password' : 'text',
-        ref: (el) => (inputsRef.current[i] = el),
-        maxLength: 1,
-        style: inputStyle
-      })
-    )
+    inputs.push(React.createElement("input", {
+      key: i,
+      onChange: handleOnChange,
+      onKeyDown: handleOnKeyDown,
+      onFocus: handleOnFocus,
+      onPaste: handleOnPaste,
+      type: password ? 'password' : 'text',
+      ref: el => inputsRef.current[i] = el,
+      maxLength: 1,
+      style: inputStyle
+    }));
   }
 
-  return /*#__PURE__*/ React.createElement(
-    'div',
-    {
-      style: containerStyle
-    },
-    inputs
-  )
-}
+  return React.createElement("div", {
+    style: containerStyle
+  }, inputs);
+};
 
-export default AuthCode
+export default AuthCode;
 //# sourceMappingURL=index.modern.js.map
