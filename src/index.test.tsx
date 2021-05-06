@@ -9,12 +9,12 @@ import AuthCode from '.';
 
 describe('AuthCode', () => {
   it('should render the default component', () => {
-    render(<AuthCode />);
+    render(<AuthCode onChange={() => null} />);
     expect(screen.getAllByRole('textbox')).toHaveLength(6);
   });
 
   it('should render n characters', () => {
-    render(<AuthCode characters={4} />);
+    render(<AuthCode onChange={() => null} characters={4} />);
     expect(screen.getAllByRole('textbox')).toHaveLength(4);
   });
 

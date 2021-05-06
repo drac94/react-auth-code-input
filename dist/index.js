@@ -11,7 +11,9 @@ var AuthCode = function AuthCode(_ref) {
       onChange = _ref.onChange,
       password = _ref.password,
       inputStyle = _ref.inputStyle,
-      containerStyle = _ref.containerStyle;
+      containerStyle = _ref.containerStyle,
+      inputClassName = _ref.inputClassName,
+      containerClassName = _ref.containerClassName;
   var inputsRef = React.useRef([]);
   React.useEffect(function () {
     inputsRef.current[0].focus();
@@ -21,7 +23,7 @@ var AuthCode = function AuthCode(_ref) {
     var res = inputsRef.current.map(function (input) {
       return input.value;
     }).join('');
-    onChange && onChange(res);
+    onChange(res);
   };
 
   var handleOnChange = function handleOnChange(e) {
@@ -90,6 +92,7 @@ var AuthCode = function AuthCode(_ref) {
         return inputsRef.current[i] = el;
       },
       maxLength: 1,
+      className: inputClassName,
       style: inputStyle
     }));
   };
@@ -99,6 +102,7 @@ var AuthCode = function AuthCode(_ref) {
   }
 
   return React__default.createElement("div", {
+    className: containerClassName,
     style: containerStyle
   }, inputs);
 };
