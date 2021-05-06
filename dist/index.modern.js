@@ -6,7 +6,9 @@ const AuthCode = ({
   onChange,
   password,
   inputStyle,
-  containerStyle
+  containerStyle,
+  inputClassName,
+  containerClassName
 }) => {
   const inputsRef = useRef([]);
   useEffect(() => {
@@ -15,7 +17,7 @@ const AuthCode = ({
 
   const sendResult = () => {
     const res = inputsRef.current.map(input => input.value).join('');
-    onChange && onChange(res);
+    onChange(res);
   };
 
   const handleOnChange = e => {
@@ -84,11 +86,13 @@ const AuthCode = ({
       type: password ? 'password' : 'text',
       ref: el => inputsRef.current[i] = el,
       maxLength: 1,
+      className: inputClassName,
       style: inputStyle
     }));
   }
 
   return React.createElement("div", {
+    className: containerClassName,
     style: containerStyle
   }, inputs);
 };

@@ -35,7 +35,7 @@ const App = () => {
         </a>
       </p>
       <h2>Default</h2>
-      <AuthCode />
+      <AuthCode onChange={() => null} />
       <code>
         {`
 import React from 'react'
@@ -48,25 +48,16 @@ const App = () => <AuthCode />
       <p>
         Try writing and then deleting characters using backspace.
         <br />
-        Pasting works too!, as long as the text copied matches the allowed
-        characters.
+        Copying and pasting also works, as long as the text copied matches the
+        allowed characters.
       </p>
       <AuthCode
+        onChange={() => null}
         characters={5}
-        containerStyle={{
-          padding: '16px'
-        }}
-        inputStyle={{
-          width: '2ch',
-          padding: '8px',
-          borderRadius: '8px',
-          fontSize: '40px',
-          textAlign: 'center',
-          marginRight: '12px',
-          border: '1px solid white',
-          textTransform: 'uppercase'
-        }}
+        containerClassName='container'
+        inputClassName='input'
       />
+      <p>index.tsx</p>
       <code>
         {`
 import React from 'react'
@@ -75,20 +66,28 @@ import AuthCode from 'react-auth-code-input'
 const App = () => {
   return (<AuthCode
     characters={5}
-    containerStyle={{
-      padding: '16px'
-    }}
-    inputStyle={{
-      width: '2ch',
-      padding: '8px',
-      borderRadius: '8px',
-      fontSize: '40px',
-      textAlign: 'center',
-      marginRight: '12px',
-      border: '1px solid white',
-      textTransform: 'uppercase'
-    }}
+    containerClassName='container'
+    inputClassName='input'
   />)
+}
+        `}
+      </code>
+      <p>styles.css</p>
+      <code>
+        {`
+.container {
+  padding: 16px;
+}
+
+.input {
+  width: 2ch;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 40px;
+  text-align: center;
+  margin-right: 12px;
+  border: 1px solid white;
+  text-transform: uppercase;
 }
         `}
       </code>

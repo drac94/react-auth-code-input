@@ -35,19 +35,9 @@ const App = () => {
   return (
     <AuthCode
       characters={5}
-      containerStyle={{
-        padding: '16px'
-      }}
-      inputStyle={{
-        width: '2ch',
-        padding: '8px',
-        borderRadius: '8px',
-        fontSize: '40px',
-        textAlign: 'center',
-        marginRight: '12px',
-        border: '1px solid black',
-        textTransform: 'uppercase'
-      }}
+      onChange={() => null}
+      containerClassName='container'
+      inputClassName='input'
     />
   );
 };
@@ -55,16 +45,24 @@ const App = () => {
 
 ### Props
 
-| Prop                | Type                    | Description                                                                     | Default Value  |
-| :------------------ | :---------------------- | :------------------------------------------------------------------------------ | :------------- |
-| `characters`        | Number                  | The number of inputs to display                                                 | 6              |
-| `allowedCharacters` | String                  | Regex for allowed characters                                                    | `^[A-Za-z0-9]` |
-| `password`          | Boolean                 | If present changes the type of the input to password, by default is set to text | False          |
-| `inputStyle`        | Object                  | The styles to be applied to each input                                          |                |
-| `containerStyle`    | Object                  | The styles to be applied to each input                                          |                |
-| `onChange`          | Function(value: String) | Callback function called every time an input value changes                      |                |
+| Prop                 | Type                    | Description                                                                     | Default Value  | Observations                   |
+| :------------------- | :---------------------- | :------------------------------------------------------------------------------ | :------------- | :----------------------------- |
+| `characters`         | Number                  | The number of inputs to display                                                 | 6              |                                |
+| `allowedCharacters`  | String                  | Regex for allowed characters                                                    | `^[A-Za-z0-9]` |                                |
+| `password`           | Boolean                 | If present changes the type of the input to password, by default is set to text | False          |                                |
+| `inputStyle`         | Object                  | The styles to be applied to each input                                          |                | deprecated since version 1.2.0 |
+| `containerStyle`     | Object                  | The styles to be applied to the container                                       |                | deprecated since version 1.2.0 |
+| `inputClassName`     | String                  | The styles to be applied to each input                                          |                |                                |
+| `containerClassName` | String                  | The styles to be applied to the container                                       |                |                                |
+| `onChange`           | Function(value: String) | Callback function called every time an input value changes                      |                |                                |
 
 ## Changelog
+
+### 1.2.0
+
+- Add `inputClassName` and `containerClassName` props.
+- Deprecate `inputStyle` and `containerStyle`.
+- Make `onChange` prop mandatory.
 
 ### 1.1.0
 
