@@ -58,6 +58,10 @@ const App = () => {
 
 ## Changelog
 
+### 1.2.1
+
+- Add missing dist files
+
 ### 1.2.0
 
 - Add `inputClassName` and `containerClassName` props.
