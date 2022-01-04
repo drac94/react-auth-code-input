@@ -25,7 +25,7 @@ const AuthCode: React.FC<Props> = ({
 
   const sendResult = () => {
     const res = inputsRef.current.map((input) => input.value).join('');
-    onChange(res);
+    onChange && onChange(res);
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

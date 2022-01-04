@@ -22,7 +22,7 @@ var AuthCode = function AuthCode(_ref) {
     var res = inputsRef.current.map(function (input) {
       return input.value;
     }).join('');
-    onChange(res);
+    onChange && onChange(res);
   };
 
   var handleOnChange = function handleOnChange(e) {
