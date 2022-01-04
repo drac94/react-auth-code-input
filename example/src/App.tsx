@@ -34,6 +34,7 @@ const App = () => {
           View documentation on GitHub
         </a>
       </p>
+      <h2>Default</h2>
       <p>
         Try it out by writing some characters.
         <br />
@@ -45,7 +46,6 @@ const App = () => {
         defined in the Regular Expression (By default accepts alphanumeric
         characters).
       </p>
-      <h2>Default</h2>
       <AuthCode onChange={() => null} />
       <code>
         {`
