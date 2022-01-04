@@ -145,6 +145,16 @@ const App = () => {
 }
         `}
       </code>
+      <a
+        className='github-fork-ribbon'
+        href='https://github.com/drac94/react-auth-code-input'
+        data-ribbon='Fork me on GitHub'
+        title='Fork me on GitHub'
+        target='_blank'
+        rel='noreferrer'
+      >
+        Fork me on GitHub
+      </a>
     </div>
   );
 };

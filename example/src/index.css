@@ -52,3 +52,7 @@ a {
   border: 1px solid white;
   text-transform: uppercase;
 }
+
+.github-fork-ribbon:before {
+  background-color: #333;
+}
