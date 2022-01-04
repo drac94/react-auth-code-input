@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import AuthCode from 'react-auth-code-input';
 import './index.css';
 
 const App = () => {
+  const [result, setResult] = useState<string>('');
+  const handleOnChange = (res: string) => {
+    setResult(res);
+  };
   return (
     <div className='main'>
       <h1>React Auth Code Input</h1>
@@ -46,13 +50,24 @@ const App = () => {
         defined in the Regular Expression (By default accepts alphanumeric
         characters).
       </p>
-      <AuthCode onChange={() => null} />
+      <AuthCode onChange={handleOnChange} />
+      {result && <p>Result: {result}</p>}
       <code>
         {`
-import React from 'react'
+import React, { useState } from 'react'
 import AuthCode from 'react-auth-code-input'
 
-const App = () => <AuthCode />
+const App = () => {
+  const [result, setResult] = useState<string>('');
+  const handleOnChange = (res: string) => {
+    setResult(res);
+  };
+  return (
+    <div>
+      <AuthCode onChange={handleOnChange} />
+      {result && <p>Result: {result}</p>}
+    </div>
+  );
         `}
       </code>
       <h2>Custom Styles</h2>
@@ -77,6 +92,7 @@ const App = () => {
     characters={5}
     containerClassName='container'
     inputClassName='input'
+    onChange={handleOnChange}
   />)
 }
         `}
@@ -124,6 +140,7 @@ const App = () => {
     inputType='password'
     containerClassName='container'
     inputClassName='input'
+    onChange={handleOnChange}
   />)
 }
         `}
