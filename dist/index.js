@@ -4,16 +4,15 @@ var React = require('react');
 var React__default = _interopDefault(React);
 
 var AuthCode = function AuthCode(_ref) {
-  var _ref$characters = _ref.characters,
-      characters = _ref$characters === void 0 ? 6 : _ref$characters,
-      _ref$allowedCharacter = _ref.allowedCharacters,
+  var _ref$allowedCharacter = _ref.allowedCharacters,
       allowedCharacters = _ref$allowedCharacter === void 0 ? '^[A-Za-z0-9]*$' : _ref$allowedCharacter,
-      onChange = _ref.onChange,
-      password = _ref.password,
-      inputStyle = _ref.inputStyle,
-      containerStyle = _ref.containerStyle,
+      _ref$characters = _ref.characters,
+      characters = _ref$characters === void 0 ? 6 : _ref$characters,
+      containerClassName = _ref.containerClassName,
       inputClassName = _ref.inputClassName,
-      containerClassName = _ref.containerClassName;
+      _ref$inputType = _ref.inputType,
+      inputType = _ref$inputType === void 0 ? 'text' : _ref$inputType,
+      onChange = _ref.onChange;
   var inputsRef = React.useRef([]);
   React.useEffect(function () {
     inputsRef.current[0].focus();
@@ -23,7 +22,7 @@ var AuthCode = function AuthCode(_ref) {
     var res = inputsRef.current.map(function (input) {
       return input.value;
     }).join('');
-    onChange(res);
+    onChange && onChange(res);
   };
 
   var handleOnChange = function handleOnChange(e) {
@@ -87,13 +86,12 @@ var AuthCode = function AuthCode(_ref) {
       onKeyDown: handleOnKeyDown,
       onFocus: handleOnFocus,
       onPaste: handleOnPaste,
-      type: password ? 'password' : 'text',
+      type: inputType,
       ref: function ref(el) {
         return inputsRef.current[i] = el;
       },
       maxLength: 1,
-      className: inputClassName,
-      style: inputStyle
+      className: inputClassName
     }));
   };
 
@@ -102,8 +100,7 @@ var AuthCode = function AuthCode(_ref) {
   }
 
   return React__default.createElement("div", {
-    className: containerClassName,
-    style: containerStyle
+    className: containerClassName
   }, inputs);
 };
 

@@ -1,31 +1,21 @@
 import React, { useRef, useEffect } from 'react';
 
 type Props = {
-  characters?: number;
   allowedCharacters?: RegExp;
-  onChange: (res: string) => void;
-  password?: boolean;
-  /**
-   * @deprecated Since version 1.2.0 Will be deleted in version 2.0. Use inputClassName instead.
-   */
-  inputStyle?: React.CSSProperties;
-  /**
-   * @deprecated Since version 1.2.0 Will be deleted in version 2.0. Use containerClassName instead.
-   */
-  containerStyle?: React.CSSProperties;
-  inputClassName?: string;
+  characters?: number;
   containerClassName?: string;
+  inputClassName?: string;
+  inputType?: 'number' | 'password' | 'text';
+  onChange: (res: string) => void;
 };
 
 const AuthCode: React.FC<Props> = ({
-  characters = 6,
   allowedCharacters = '^[A-Za-z0-9]*$',
-  onChange,
-  password,
-  inputStyle,
-  containerStyle,
+  characters = 6,
+  containerClassName,
   inputClassName,
-  containerClassName
+  inputType = 'text',
+  onChange
 }) => {
   const inputsRef = useRef<Array<HTMLInputElement>>([]);
 
@@ -35,7 +25,7 @@ const AuthCode: React.FC<Props> = ({
 
   const sendResult = () => {
     const res = inputsRef.current.map((input) => input.value).join('');
-    onChange(res);
+    onChange && onChange(res);
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,20 +82,15 @@ const AuthCode: React.FC<Props> = ({
         onKeyDown={handleOnKeyDown}
         onFocus={handleOnFocus}
         onPaste={handleOnPaste}
-        type={password ? 'password' : 'text'}
+        type={inputType}
         ref={(el: HTMLInputElement) => (inputsRef.current[i] = el)}
         maxLength={1}
         className={inputClassName}
-        style={inputStyle}
       />
     );
   }
 
-  return (
-    <div className={containerClassName} style={containerStyle}>
-      {inputs}
-    </div>
-  );
+  return <div className={containerClassName}>{inputs}</div>;
 };
 
 export default AuthCode;
