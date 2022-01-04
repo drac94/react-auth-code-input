@@ -151,7 +151,7 @@ const App = () => {
         data-ribbon='Fork me on GitHub'
         title='Fork me on GitHub'
         target='_blank'
-        rel='noreferrer'
+        rel='noopener noreferrer'
       >
         Fork me on GitHub
       </a>
