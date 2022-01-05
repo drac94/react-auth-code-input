@@ -82,6 +82,10 @@ const AuthCode: React.FC<Props> = ({
         onKeyDown={handleOnKeyDown}
         onFocus={handleOnFocus}
         onPaste={handleOnPaste}
+        autoComplete={i === 0 ? 'one-time-password' : 'off'}
+        inputMode='numeric'
+        pattern="\d*"
+        aria-label={`digit ${i+1} of ${characters}`}
         type={inputType}
         ref={(el: HTMLInputElement) => (inputsRef.current[i] = el)}
         maxLength={1}
