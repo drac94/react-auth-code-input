@@ -1,6 +1,6 @@
 {
   "name": "react-auth-code-input",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A React Component for inputting Auth Codes inspired in Apple Two-Factor Authentication UI. You can type, paste and move backwards using the backspace.",
   "author": "drac94",
   "license": "MIT",
