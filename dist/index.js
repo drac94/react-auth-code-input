@@ -5,7 +5,8 @@ var React__default = _interopDefault(React);
 
 var AuthCode = function AuthCode(_ref) {
   var _ref$allowedCharacter = _ref.allowedCharacters,
-      allowedCharacters = _ref$allowedCharacter === void 0 ? '^[A-Za-z0-9]*$' : _ref$allowedCharacter,
+      allowedCharacters = _ref$allowedCharacter === void 0 ? '[A-Za-z0-9]+' : _ref$allowedCharacter,
+      ariaLabel = _ref.ariaLabel,
       _ref$characters = _ref.characters,
       characters = _ref$characters === void 0 ? 6 : _ref$characters,
       containerClassName = _ref.containerClassName,
@@ -14,6 +15,7 @@ var AuthCode = function AuthCode(_ref) {
       inputType = _ref$inputType === void 0 ? 'text' : _ref$inputType,
       onChange = _ref.onChange;
   var inputsRef = React.useRef([]);
+  var inputMode = inputType === 'number' ? 'numeric' : 'text';
   React.useEffect(function () {
     inputsRef.current[0].focus();
   }, []);
@@ -26,9 +28,13 @@ var AuthCode = function AuthCode(_ref) {
   };
 
   var handleOnChange = function handleOnChange(e) {
-    if (e.target.value.match(allowedCharacters)) {
-      if (e.target.nextElementSibling !== null) {
-        e.target.nextElementSibling.focus();
+    var _e$target = e.target,
+        value = _e$target.value,
+        nextElementSibling = _e$target.nextElementSibling;
+
+    if (value.match(allowedCharacters)) {
+      if (nextElementSibling !== null) {
+        nextElementSibling.focus();
       }
     } else {
       e.target.value = '';
@@ -91,7 +97,11 @@ var AuthCode = function AuthCode(_ref) {
         return inputsRef.current[i] = el;
       },
       maxLength: 1,
-      className: inputClassName
+      className: inputClassName,
+      inputMode: inputMode,
+      autoComplete: i === 0 ? 'one-time-code' : 'off',
+      "aria-label": ariaLabel ? ariaLabel + ". Character " + (i + 1) + "." : "Character " + (i + 1) + ".",
+      pattern: i === 0 ? allowedCharacters : ''
     }));
   };
 

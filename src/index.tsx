@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 
 type Props = {
-  allowedCharacters?: RegExp;
+  allowedCharacters?: string;
+  ariaLabel?: string;
   characters?: number;
   containerClassName?: string;
   inputClassName?: string;
@@ -10,7 +11,8 @@ type Props = {
 };
 
 const AuthCode: React.FC<Props> = ({
-  allowedCharacters = '^[A-Za-z0-9]*$',
+  allowedCharacters = '[A-Za-z0-9]+',
+  ariaLabel,
   characters = 6,
   containerClassName,
   inputClassName,
@@ -18,6 +20,8 @@ const AuthCode: React.FC<Props> = ({
   onChange
 }) => {
   const inputsRef = useRef<Array<HTMLInputElement>>([]);
+
+  const inputMode = inputType === 'number' ? 'numeric' : 'text';
 
   useEffect(() => {
     inputsRef.current[0].focus();
@@ -29,9 +33,12 @@ const AuthCode: React.FC<Props> = ({
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.match(allowedCharacters)) {
-      if (e.target.nextElementSibling !== null) {
-        (e.target.nextElementSibling as HTMLInputElement).focus();
+    const {
+      target: { value, nextElementSibling }
+    } = e;
+    if (value.match(allowedCharacters)) {
+      if (nextElementSibling !== null) {
+        (nextElementSibling as HTMLInputElement).focus();
       }
     } else {
       e.target.value = '';
@@ -86,6 +93,14 @@ const AuthCode: React.FC<Props> = ({
         ref={(el: HTMLInputElement) => (inputsRef.current[i] = el)}
         maxLength={1}
         className={inputClassName}
+        inputMode={inputMode}
+        autoComplete={i === 0 ? 'one-time-code' : 'off'}
+        aria-label={
+          ariaLabel
+            ? `${ariaLabel}. Character ${i + 1}.`
+            : `Character ${i + 1}.`
+        }
+        pattern={i === 0 ? allowedCharacters : ''}
       />
     );
   }

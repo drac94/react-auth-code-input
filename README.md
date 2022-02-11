@@ -53,7 +53,8 @@ const App = () => {
 
 | Prop                 | Type                    | Description                                                                     | Default Value  | Observations                   |
 | :------------------- | :---------------------- | :------------------------------------------------------------------------------ | :------------- | :----------------------------- |
-| `allowedCharacters`  | String                  | Regex for allowed characters                                                    | `^[A-Za-z0-9]` |                                |
+| `allowedCharacters`  | String                  | Regex for allowed characters                                                    | `[A-Za-z0-9]+` |                                |
+| `ariaLabel`          | String                  | Accessibility                                                                   |                |                                |
 | `characters`         | Number                  | The number of inputs to display                                                 | 6              |                                |
 | `containerClassName` | String                  | The styles to be applied to the container                                       |                |                                |
 | `inputClassName`     | String                  | The styles to be applied to each input                                          |                |                                |
@@ -64,6 +65,12 @@ const App = () => {
 | ~~`containerStyle`~~ | Object                  | The styles to be applied to the container                                       |                | deprecated since version 1.2.0 |
 
 ## Changelog
+
+### 2.1.0
+
+- Support to fill one-time-codes directly from SMS's.
+- Displays numeric keyboard on mobile devices when the `inputType` prop is set to `number`
+- Add `ariaLabel` prop for accessibility.
 
 ### 2.0.0
 

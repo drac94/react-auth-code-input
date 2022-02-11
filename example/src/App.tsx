@@ -76,10 +76,12 @@ const App = () => {
         <i>containerClassName</i> and <i>inputClassName</i> properties.
       </p>
       <AuthCode
+        allowedCharacters='[0-9]+'
         onChange={() => null}
         characters={5}
         containerClassName='container'
         inputClassName='input'
+        inputType='number'
       />
       <p>index.tsx</p>
       <code>
@@ -89,9 +91,11 @@ import AuthCode from 'react-auth-code-input'
 
 const App = () => {
   return (<AuthCode
+    allowedCharacters='[0-9]+'
     characters={5}
     containerClassName='container'
     inputClassName='input'
+    inputType='number'
     onChange={handleOnChange}
   />)
 }
