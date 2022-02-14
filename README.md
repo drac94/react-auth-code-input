@@ -2,7 +2,7 @@
 
 # React Auth Code Input
 
-> A React Component for inputting Auth Codes inspired in Apple Two-Factor Authentication UI. You can type, paste and move backwards using the backspace.
+> One-time password (OTP) React input component, uncontrolled, zero dependencies, fully tested.
 
 [![NPM](https://img.shields.io/npm/v/react-auth-code-input.svg)](https://www.npmjs.com/package/react-auth-code-input) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
@@ -40,7 +40,7 @@ const App = () => {
 
   return (
     <AuthCode
-      characters={5}
+      length={5}
       onChange={handleOnChange}
       containerClassName='container'
       inputClassName='input'
@@ -49,22 +49,26 @@ const App = () => {
 };
 ```
 
-### Props
+## Props
 
-| Prop                 | Type                    | Description                                                                     | Default Value  | Observations                   |
-| :------------------- | :---------------------- | :------------------------------------------------------------------------------ | :------------- | :----------------------------- |
-| `allowedCharacters`  | String                  | Regex for allowed characters                                                    | `[A-Za-z0-9]+` |                                |
-| `ariaLabel`          | String                  | Accessibility                                                                   |                |                                |
-| `characters`         | Number                  | The number of inputs to display                                                 | 6              |                                |
-| `containerClassName` | String                  | The styles to be applied to the container                                       |                |                                |
-| `inputClassName`     | String                  | The styles to be applied to each input                                          |                |                                |
-| `inputType`          | String                  | The type of the inputs                                                          | text           | text, number or password       |
-| `onChange`           | Function(value: String) | Callback function called every time an input value changes                      |                |                                |
-| ~~`password`~~       | Boolean                 | If present changes the type of the input to password, by default is set to text | false          | deprecated since version 2.0.0 |
-| ~~`inputStyle`~~     | Object                  | The styles to be applied to each input                                          |                | deprecated since version 1.2.0 |
-| ~~`containerStyle`~~ | Object                  | The styles to be applied to the container                                       |                | deprecated since version 1.2.0 |
+| Prop                 | Type                    | Description                                                 | Default Value  | Observations                       |
+| :------------------- | :---------------------- | :---------------------------------------------------------- | :------------- | :--------------------------------- |
+| `allowedCharacters`  | String                  | Type of allowed characters for your code.                   | `alphanumeric` | `alpha`, `alphanumeric`, `numeric` |
+| `ariaLabel`          | String                  | Accessibility.                                              |                |                                    |
+| `length`             | Number                  | The number of inputs to display.                            | 6              |                                    |
+| `containerClassName` | String                  | The styles to be applied to the container.                  |                |                                    |
+| `inputClassName`     | String                  | The styles to be applied to each input.                     |                |                                    |
+| `onChange`           | Function(value: String) | Callback function called every time an input value changes. |                |                                    |
+| `isPassword`         | Boolean                 | Whether to display the inputs as passwords or not.          | false          |                                    |
 
 ## Changelog
+
+### 3.0.0
+
+- Change the way the allowed characters are handled by using 3 predefined modes: alpha, alphanumeric, and numeric, allowing to have more control when validating the values introduced in the inputs.
+- Improved logic.
+- Improved tests.
+- Improved types.
 
 ### 2.1.0
 
@@ -95,6 +99,21 @@ const App = () => {
 ### 1.0.0
 
 - Initial Version.
+
+## Props versions 1 and 2
+
+| Prop                 | Type                    | Description                                                                     | Default Value  | Observations                   |
+| :------------------- | :---------------------- | :------------------------------------------------------------------------------ | :------------- | :----------------------------- |
+| `allowedCharacters`  | String                  | Regex for allowed characters                                                    | `[A-Za-z0-9]+` |                                |
+| `ariaLabel`          | String                  | Accessibility                                                                   |                |                                |
+| `characters`         | Number                  | The number of inputs to display                                                 | 6              |                                |
+| `containerClassName` | String                  | The styles to be applied to the container                                       |                |                                |
+| `inputClassName`     | String                  | The styles to be applied to each input                                          |                |                                |
+| `inputType`          | String                  | The type of the inputs                                                          | text           | text, number or password       |
+| `onChange`           | Function(value: String) | Callback function called every time an input value changes                      |                |                                |
+| ~~`password`~~       | Boolean                 | If present changes the type of the input to password, by default is set to text | false          | deprecated since version 2.0.0 |
+| ~~`inputStyle`~~     | Object                  | The styles to be applied to each input                                          |                | deprecated since version 1.2.0 |
+| ~~`containerStyle`~~ | Object                  | The styles to be applied to the container                                       |                | deprecated since version 1.2.0 |
 
 ## License
 

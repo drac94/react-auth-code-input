@@ -1,7 +1,7 @@
 {
   "name": "react-auth-code-input",
-  "version": "2.1.0",
-  "description": "A React Component for inputting Auth Codes inspired in Apple Two-Factor Authentication UI. You can type, paste and move backwards using the backspace.",
+  "version": "3.0.0",
+  "description": "One-time password (OTP) React input component, uncontrolled, zero dependencies, fully tested.",
   "author": "drac94",
   "license": "MIT",
   "repository": "drac94/react-auth-code-input",

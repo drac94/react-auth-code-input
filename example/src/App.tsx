@@ -11,6 +11,7 @@ const App = () => {
   return (
     <div className='main'>
       <h1>React Auth Code Input</h1>
+      <p>One-time password (OTP) React input component.</p>
       <div className='badges'>
         <img
           alt=''
@@ -38,18 +39,19 @@ const App = () => {
           View documentation on GitHub
         </a>
       </p>
+      <h3>Modes:</h3>
+      <ul>
+        <li>Alpha.</li>
+        <li>Alphanumeric (default).</li>
+        <li>Numeric.</li>
+      </ul>
+      <h3>Supports:</h3>
+      <ul>
+        <li>Pasting.</li>
+        <li>Move back using the backspace key.</li>
+        <li>SMS.</li>
+      </ul>
       <h2>Default</h2>
-      <p>
-        Try it out by writing some characters.
-        <br />
-        <br />
-        Delete and move back using the backspace.
-        <br />
-        <br />
-        You can also paste text as long as it matches the allowed characters
-        defined in the Regular Expression (By default accepts alphanumeric
-        characters).
-      </p>
       <AuthCode onChange={handleOnChange} />
       {result && <p>Result: {result}</p>}
       <code>
@@ -76,12 +78,11 @@ const App = () => {
         <i>containerClassName</i> and <i>inputClassName</i> properties.
       </p>
       <AuthCode
-        allowedCharacters='[0-9]+'
+        allowedCharacters='numeric'
         onChange={() => null}
-        characters={5}
+        length={5}
         containerClassName='container'
         inputClassName='input'
-        inputType='number'
       />
       <p>index.tsx</p>
       <code>
@@ -91,8 +92,8 @@ import AuthCode from 'react-auth-code-input'
 
 const App = () => {
   return (<AuthCode
-    allowedCharacters='[0-9]+'
-    characters={5}
+    allowedCharacters='numeric'
+    length={5}
     containerClassName='container'
     inputClassName='input'
     inputType='number'
@@ -120,15 +121,12 @@ const App = () => {
 }
         `}
       </code>
-      <h2>Input Types</h2>
-      <p>
-        Choose between <b>numeric</b>, <b>text</b> or <b>password</b> input
-        types (Defaults to text).
-      </p>
+      <h2>Passwords</h2>
+      <p>Protect your inputs.</p>
       <AuthCode
         onChange={() => null}
-        characters={5}
-        inputType='password'
+        length={5}
+        isPassword
         containerClassName='container'
         inputClassName='input'
       />
@@ -140,8 +138,8 @@ import AuthCode from 'react-auth-code-input'
 
 const App = () => {
   return (<AuthCode
-    characters={5}
-    inputType='password'
+    length={5}
+    isPassword
     containerClassName='container'
     inputClassName='input'
     onChange={handleOnChange}
