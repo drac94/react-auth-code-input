@@ -56,3 +56,17 @@ a {
 .github-fork-ribbon:before {
   background-color: #333;
 }
+
+ul {
+  text-align: left;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}

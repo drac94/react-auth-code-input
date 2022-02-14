@@ -1,48 +1,77 @@
 import React, { useRef, useEffect } from 'react';
 
-var AuthCode = function AuthCode(_ref) {
-  var _ref$allowedCharacter = _ref.allowedCharacters,
-      allowedCharacters = _ref$allowedCharacter === void 0 ? '[A-Za-z0-9]+' : _ref$allowedCharacter,
-      ariaLabel = _ref.ariaLabel,
-      _ref$characters = _ref.characters,
-      characters = _ref$characters === void 0 ? 6 : _ref$characters,
-      containerClassName = _ref.containerClassName,
-      inputClassName = _ref.inputClassName,
-      _ref$inputType = _ref.inputType,
-      inputType = _ref$inputType === void 0 ? 'text' : _ref$inputType,
-      onChange = _ref.onChange;
-  var inputsRef = useRef([]);
-  var inputMode = inputType === 'number' ? 'numeric' : 'text';
-  useEffect(function () {
+const propsMap = {
+  alpha: {
+    type: 'text',
+    inputMode: 'text',
+    pattern: '[a-zA-Z]{1}'
+  },
+  alphanumeric: {
+    type: 'text',
+    inputMode: 'text',
+    pattern: '[a-zA-Z0-9]{1}'
+  },
+  numeric: {
+    type: 'number',
+    inputMode: 'numeric',
+    pattern: '[0-9]{1}',
+    min: '0',
+    max: '9'
+  }
+};
+
+const AuthCode = ({
+  allowedCharacters: _allowedCharacters = 'alphanumeric',
+  ariaLabel,
+  length: _length = 6,
+  containerClassName,
+  inputClassName,
+  isPassword: _isPassword = false,
+  onChange
+}) => {
+  const inputsRef = useRef([]);
+  const inputProps = propsMap[_allowedCharacters];
+  useEffect(() => {
     inputsRef.current[0].focus();
   }, []);
 
-  var sendResult = function sendResult() {
-    var res = inputsRef.current.map(function (input) {
-      return input.value;
-    }).join('');
+  const sendResult = () => {
+    const res = inputsRef.current.map(input => input.value).join('');
     onChange && onChange(res);
   };
 
-  var handleOnChange = function handleOnChange(e) {
-    var _e$target = e.target,
-        value = _e$target.value,
-        nextElementSibling = _e$target.nextElementSibling;
+  const handleOnChange = e => {
+    const {
+      target: {
+        value,
+        nextElementSibling
+      }
+    } = e;
 
-    if (value.match(allowedCharacters)) {
+    if (value.length > 1) {
+      e.target.value = value.charAt(0);
+
       if (nextElementSibling !== null) {
         nextElementSibling.focus();
       }
     } else {
-      e.target.value = '';
+      if (value.match(inputProps.pattern)) {
+        if (nextElementSibling !== null) {
+          nextElementSibling.focus();
+        }
+      } else {
+        e.target.value = '';
+      }
     }
 
     sendResult();
   };
 
-  var handleOnKeyDown = function handleOnKeyDown(e) {
-    var key = e.key;
-    var target = e.target;
+  const handleOnKeyDown = e => {
+    const {
+      key
+    } = e;
+    const target = e.target;
 
     if (key === 'Backspace') {
       if (target.value === '' && target.previousElementSibling !== null) {
@@ -58,52 +87,51 @@ var AuthCode = function AuthCode(_ref) {
     }
   };
 
-  var handleOnFocus = function handleOnFocus(e) {
+  const handleOnFocus = e => {
     e.target.select();
   };
 
-  var handleOnPaste = function handleOnPaste(e) {
-    var value = e.clipboardData.getData('Text');
+  const handleOnPaste = e => {
+    const pastedValue = e.clipboardData.getData('Text');
+    let currentInput = 0;
 
-    if (value.match(allowedCharacters)) {
-      for (var i = 0; i < characters && i < value.length; i++) {
-        inputsRef.current[i].value = value.charAt(i);
+    for (let i = 0; i < pastedValue.length; i++) {
+      const pastedCharacter = pastedValue.charAt(i);
+      const currentValue = inputsRef.current[currentInput].value;
 
-        if (inputsRef.current[i].nextElementSibling !== null) {
-          inputsRef.current[i].nextElementSibling.focus();
+      if (pastedCharacter.match(inputProps.pattern)) {
+        if (!currentValue) {
+          inputsRef.current[currentInput].value = pastedCharacter;
+
+          if (inputsRef.current[currentInput].nextElementSibling !== null) {
+            inputsRef.current[currentInput].nextElementSibling.focus();
+            currentInput++;
+          }
         }
       }
-
-      sendResult();
     }
 
+    sendResult();
     e.preventDefault();
   };
 
-  var inputs = [];
+  const inputs = [];
 
-  var _loop = function _loop(i) {
-    inputs.push(React.createElement("input", {
+  for (let i = 0; i < _length; i++) {
+    inputs.push(React.createElement("input", Object.assign({
       key: i,
       onChange: handleOnChange,
       onKeyDown: handleOnKeyDown,
       onFocus: handleOnFocus,
-      onPaste: handleOnPaste,
-      type: inputType,
-      ref: function ref(el) {
-        return inputsRef.current[i] = el;
-      },
+      onPaste: handleOnPaste
+    }, inputProps, {
+      type: _isPassword ? 'password' : inputProps.type,
+      ref: el => inputsRef.current[i] = el,
       maxLength: 1,
       className: inputClassName,
-      inputMode: inputMode,
       autoComplete: i === 0 ? 'one-time-code' : 'off',
-      "aria-label": ariaLabel ? ariaLabel + ". Character " + (i + 1) + "." : "Character " + (i + 1) + ".",
-      pattern: i === 0 ? allowedCharacters : ''
-    }));
-  };
-
-  for (var i = 0; i < characters; i++) {
-    _loop(i);
+      "aria-label": ariaLabel ? `${ariaLabel}. Character ${i + 1}.` : `Character ${i + 1}.`
+    })));
   }
 
   return React.createElement("div", {
