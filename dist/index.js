@@ -83,6 +83,7 @@ var AuthCode = function AuthCode(_ref) {
         }
       } else {
         target.value = '';
+        target.previousElementSibling.focus();
       }
 
       sendResult();

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-const propsMap = {
+var propsMap = {
   alpha: {
     type: 'text',
     inputMode: 'text',
@@ -20,33 +20,34 @@ const propsMap = {
   }
 };
 
-const AuthCode = ({
-  allowedCharacters: _allowedCharacters = 'alphanumeric',
-  ariaLabel,
-  length: _length = 6,
-  containerClassName,
-  inputClassName,
-  isPassword: _isPassword = false,
-  onChange
-}) => {
-  const inputsRef = useRef([]);
-  const inputProps = propsMap[_allowedCharacters];
-  useEffect(() => {
+var AuthCode = function AuthCode(_ref) {
+  var _ref$allowedCharacter = _ref.allowedCharacters,
+      allowedCharacters = _ref$allowedCharacter === void 0 ? 'alphanumeric' : _ref$allowedCharacter,
+      ariaLabel = _ref.ariaLabel,
+      _ref$length = _ref.length,
+      length = _ref$length === void 0 ? 6 : _ref$length,
+      containerClassName = _ref.containerClassName,
+      inputClassName = _ref.inputClassName,
+      _ref$isPassword = _ref.isPassword,
+      isPassword = _ref$isPassword === void 0 ? false : _ref$isPassword,
+      onChange = _ref.onChange;
+  var inputsRef = useRef([]);
+  var inputProps = propsMap[allowedCharacters];
+  useEffect(function () {
     inputsRef.current[0].focus();
   }, []);
 
-  const sendResult = () => {
-    const res = inputsRef.current.map(input => input.value).join('');
+  var sendResult = function sendResult() {
+    var res = inputsRef.current.map(function (input) {
+      return input.value;
+    }).join('');
     onChange && onChange(res);
   };
 
-  const handleOnChange = e => {
-    const {
-      target: {
-        value,
-        nextElementSibling
-      }
-    } = e;
+  var handleOnChange = function handleOnChange(e) {
+    var _e$target = e.target,
+        value = _e$target.value,
+        nextElementSibling = _e$target.nextElementSibling;
 
     if (value.length > 1) {
       e.target.value = value.charAt(0);
@@ -67,11 +68,9 @@ const AuthCode = ({
     sendResult();
   };
 
-  const handleOnKeyDown = e => {
-    const {
-      key
-    } = e;
-    const target = e.target;
+  var handleOnKeyDown = function handleOnKeyDown(e) {
+    var key = e.key;
+    var target = e.target;
 
     if (key === 'Backspace') {
       if (target.value === '' && target.previousElementSibling !== null) {
@@ -81,23 +80,24 @@ const AuthCode = ({
         }
       } else {
         target.value = '';
+        target.previousElementSibling.focus();
       }
 
       sendResult();
     }
   };
 
-  const handleOnFocus = e => {
+  var handleOnFocus = function handleOnFocus(e) {
     e.target.select();
   };
 
-  const handleOnPaste = e => {
-    const pastedValue = e.clipboardData.getData('Text');
-    let currentInput = 0;
+  var handleOnPaste = function handleOnPaste(e) {
+    var pastedValue = e.clipboardData.getData('Text');
+    var currentInput = 0;
 
-    for (let i = 0; i < pastedValue.length; i++) {
-      const pastedCharacter = pastedValue.charAt(i);
-      const currentValue = inputsRef.current[currentInput].value;
+    for (var i = 0; i < pastedValue.length; i++) {
+      var pastedCharacter = pastedValue.charAt(i);
+      var currentValue = inputsRef.current[currentInput].value;
 
       if (pastedCharacter.match(inputProps.pattern)) {
         if (!currentValue) {
@@ -115,9 +115,9 @@ const AuthCode = ({
     e.preventDefault();
   };
 
-  const inputs = [];
+  var inputs = [];
 
-  for (let i = 0; i < _length; i++) {
+  var _loop = function _loop(i) {
     inputs.push(React.createElement("input", Object.assign({
       key: i,
       onChange: handleOnChange,
@@ -125,13 +125,19 @@ const AuthCode = ({
       onFocus: handleOnFocus,
       onPaste: handleOnPaste
     }, inputProps, {
-      type: _isPassword ? 'password' : inputProps.type,
-      ref: el => inputsRef.current[i] = el,
+      type: isPassword ? 'password' : inputProps.type,
+      ref: function ref(el) {
+        return inputsRef.current[i] = el;
+      },
       maxLength: 1,
       className: inputClassName,
       autoComplete: i === 0 ? 'one-time-code' : 'off',
-      "aria-label": ariaLabel ? `${ariaLabel}. Character ${i + 1}.` : `Character ${i + 1}.`
+      "aria-label": ariaLabel ? ariaLabel + ". Character " + (i + 1) + "." : "Character " + (i + 1) + "."
     })));
+  };
+
+  for (var i = 0; i < length; i++) {
+    _loop(i);
   }
 
   return React.createElement("div", {
