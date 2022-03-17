@@ -98,6 +98,7 @@ const AuthCode: React.FC<Props> = ({
         }
       } else {
         target.value = '';
+        (target.previousElementSibling as HTMLInputElement).focus();
       }
       sendResult();
     }
