@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
 
 const propsMap = {
   alpha: {
@@ -19,8 +19,7 @@ const propsMap = {
     max: '9'
   }
 };
-
-const AuthCode = ({
+const AuthCode = forwardRef(({
   allowedCharacters: _allowedCharacters = 'alphanumeric',
   ariaLabel,
   length: _length = 6,
@@ -28,9 +27,17 @@ const AuthCode = ({
   inputClassName,
   isPassword: _isPassword = false,
   onChange
-}) => {
+}, ref) => {
   const inputsRef = useRef([]);
+  const firstInputRef = useRef();
   const inputProps = propsMap[_allowedCharacters];
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      if (firstInputRef.current) {
+        firstInputRef.current.focus();
+      }
+    }
+  }));
   useEffect(() => {
     inputsRef.current[0].focus();
   }, []);
@@ -126,7 +133,13 @@ const AuthCode = ({
       onPaste: handleOnPaste
     }, inputProps, {
       type: _isPassword ? 'password' : inputProps.type,
-      ref: el => inputsRef.current[i] = el,
+      ref: el => {
+        inputsRef.current[i] = el;
+
+        if (i === 0) {
+          firstInputRef.current = el;
+        }
+      },
       maxLength: 1,
       className: inputClassName,
       autoComplete: i === 0 ? 'one-time-code' : 'off',
@@ -137,7 +150,7 @@ const AuthCode = ({
   return React.createElement("div", {
     className: containerClassName
   }, inputs);
-};
+});
 
 export default AuthCode;
 //# sourceMappingURL=index.modern.js.map

@@ -22,8 +22,7 @@ var propsMap = {
     max: '9'
   }
 };
-
-var AuthCode = function AuthCode(_ref) {
+var AuthCode = React.forwardRef(function (_ref, ref) {
   var _ref$allowedCharacter = _ref.allowedCharacters,
       allowedCharacters = _ref$allowedCharacter === void 0 ? 'alphanumeric' : _ref$allowedCharacter,
       ariaLabel = _ref.ariaLabel,
@@ -35,7 +34,17 @@ var AuthCode = function AuthCode(_ref) {
       isPassword = _ref$isPassword === void 0 ? false : _ref$isPassword,
       onChange = _ref.onChange;
   var inputsRef = React.useRef([]);
+  var firstInputRef = React.useRef();
   var inputProps = propsMap[allowedCharacters];
+  React.useImperativeHandle(ref, function () {
+    return {
+      focus: function focus() {
+        if (firstInputRef.current) {
+          firstInputRef.current.focus();
+        }
+      }
+    };
+  });
   React.useEffect(function () {
     inputsRef.current[0].focus();
   }, []);
@@ -129,7 +138,11 @@ var AuthCode = function AuthCode(_ref) {
     }, inputProps, {
       type: isPassword ? 'password' : inputProps.type,
       ref: function ref(el) {
-        return inputsRef.current[i] = el;
+        inputsRef.current[i] = el;
+
+        if (i === 0) {
+          firstInputRef.current = el;
+        }
       },
       maxLength: 1,
       className: inputClassName,
@@ -145,7 +158,7 @@ var AuthCode = function AuthCode(_ref) {
   return React__default.createElement("div", {
     className: containerClassName
   }, inputs);
-};
+});
 
 module.exports = AuthCode;
 //# sourceMappingURL=index.js.map

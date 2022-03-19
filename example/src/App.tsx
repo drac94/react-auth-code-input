@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-import AuthCode from 'react-auth-code-input';
+import AuthCode, { AuthCodeHandle } from 'react-auth-code-input';
 import './index.css';
 
 const App = () => {
+  const fInput = useRef<AuthCodeHandle>(null);
   const [result, setResult] = useState<string>('');
   const handleOnChange = (res: string) => {
     setResult(res);
@@ -52,8 +53,9 @@ const App = () => {
         <li>SMS.</li>
       </ul>
       <h2>Default</h2>
-      <AuthCode onChange={handleOnChange} />
+      <AuthCode ref={fInput} onChange={handleOnChange} />
       {result && <p>Result: {result}</p>}
+      <button onClick={() => fInput.current?.focus()}>Focus</button>
       <code>
         {`
 import React, { useState } from 'react'
