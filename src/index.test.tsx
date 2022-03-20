@@ -309,4 +309,48 @@ describe('AuthCode', () => {
       expect(onChangeFn).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('Bad properties', () => {
+    it('should throw an exception when the length prop is less than 1', () => {
+      const err = console.error;
+      console.error = jest.fn();
+      const onChangeFn = jest.fn();
+      const badRender = () => {
+        render(<AuthCode onChange={onChangeFn} length={0} />);
+      };
+
+      expect(badRender).toThrowError(
+        'Length should be a number and greater than 0'
+      );
+      console.error = err;
+    });
+
+    it('should throw an exception when the length prop is not a number', () => {
+      const err = console.error;
+      console.error = jest.fn();
+      const onChangeFn = jest.fn();
+      const badRender = () => {
+        // @ts-ignore
+        render(<AuthCode onChange={onChangeFn} length='hello' />);
+      };
+
+      expect(badRender).toThrowError(
+        'Length should be a number and greater than 0'
+      );
+      console.error = err;
+    });
+
+    it('should throw an exception when the allowedCharacters prop s not valid', () => {
+      const err = console.error;
+      console.error = jest.fn();
+      const onChangeFn = jest.fn();
+      const badRender = () => {
+        // @ts-ignore
+        render(<AuthCode onChange={onChangeFn} allowedCharacters='invalid' />);
+      };
+
+      expect(badRender).toThrowError('Invalid value for allowedCharacters');
+      console.error = err;
+    });
+  });
 });

@@ -1,5 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
 
+const allowedCharactersValues = ['alpha', 'numeric', 'alphanumeric'];
 const propsMap = {
   alpha: {
     type: 'text',
@@ -28,13 +29,29 @@ const AuthCode = forwardRef(({
   isPassword: _isPassword = false,
   onChange
 }, ref) => {
+  if (isNaN(_length) || _length < 1) {
+    throw new Error('Length should be a number and greater than 0');
+  }
+
+  if (!allowedCharactersValues.some(value => value === _allowedCharacters)) {
+    throw new Error('Invalid value for allowedCharacters. Use alpha, numeric, or alphanumeric');
+  }
+
   const inputsRef = useRef([]);
-  const firstInputRef = useRef();
   const inputProps = propsMap[_allowedCharacters];
   useImperativeHandle(ref, () => ({
     focus: () => {
-      if (firstInputRef.current) {
-        firstInputRef.current.focus();
+      if (inputsRef.current) {
+        inputsRef.current[0].focus();
+      }
+    },
+    clear: () => {
+      if (inputsRef.current) {
+        for (let i = 0; i < inputsRef.current.length; i++) {
+          inputsRef.current[i].value = '';
+        }
+
+        inputsRef.current[0].focus();
       }
     }
   }));
@@ -135,10 +152,6 @@ const AuthCode = forwardRef(({
       type: _isPassword ? 'password' : inputProps.type,
       ref: el => {
         inputsRef.current[i] = el;
-
-        if (i === 0) {
-          firstInputRef.current = el;
-        }
       },
       maxLength: 1,
       className: inputClassName,

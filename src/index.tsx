@@ -5,8 +5,10 @@ import React, {
   forwardRef
 } from 'react';
 
+const allowedCharactersValues = ['alpha', 'numeric', 'alphanumeric'] as const;
+
 type Props = {
-  allowedCharacters?: 'alpha' | 'numeric' | 'alphanumeric';
+  allowedCharacters?: typeof allowedCharactersValues[number];
   ariaLabel?: string;
   length?: number;
   containerClassName?: string;
@@ -27,8 +29,9 @@ type InputProps = {
   max?: string;
 };
 
-export type AuthCodeHandle = {
+export type AuthCodeRef = {
   focus: () => void;
+  clear: () => void;
 };
 
 const propsMap: { [key: string]: InputProps } = {
@@ -53,7 +56,7 @@ const propsMap: { [key: string]: InputProps } = {
   }
 };
 
-const AuthCode = forwardRef<AuthCodeHandle, Props>(
+const AuthCode = forwardRef<AuthCodeRef, Props>(
   (
     {
       allowedCharacters = 'alphanumeric',
@@ -66,14 +69,31 @@ const AuthCode = forwardRef<AuthCodeHandle, Props>(
     },
     ref
   ) => {
+    if (isNaN(length) || length < 1) {
+      throw new Error('Length should be a number and greater than 0');
+    }
+
+    if (!allowedCharactersValues.some((value) => value === allowedCharacters)) {
+      throw new Error(
+        'Invalid value for allowedCharacters. Use alpha, numeric, or alphanumeric'
+      );
+    }
+
     const inputsRef = useRef<Array<HTMLInputElement>>([]);
-    const firstInputRef = useRef<HTMLInputElement>();
     const inputProps = propsMap[allowedCharacters];
 
     useImperativeHandle(ref, () => ({
       focus: () => {
-        if (firstInputRef.current) {
-          firstInputRef.current.focus();
+        if (inputsRef.current) {
+          inputsRef.current[0].focus();
+        }
+      },
+      clear: () => {
+        if (inputsRef.current) {
+          for (let i = 0; i < inputsRef.current.length; i++) {
+            inputsRef.current[i].value = '';
+          }
+          inputsRef.current[0].focus();
         }
       }
     }));
@@ -165,9 +185,6 @@ const AuthCode = forwardRef<AuthCodeHandle, Props>(
           type={isPassword ? 'password' : inputProps.type}
           ref={(el: HTMLInputElement) => {
             inputsRef.current[i] = el;
-            if (i === 0) {
-              firstInputRef.current = el;
-            }
           }}
           maxLength={1}
           className={inputClassName}

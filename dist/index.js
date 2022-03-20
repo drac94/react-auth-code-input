@@ -3,6 +3,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = require('react');
 var React__default = _interopDefault(React);
 
+var allowedCharactersValues = ['alpha', 'numeric', 'alphanumeric'];
 var propsMap = {
   alpha: {
     type: 'text',
@@ -33,14 +34,33 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
       _ref$isPassword = _ref.isPassword,
       isPassword = _ref$isPassword === void 0 ? false : _ref$isPassword,
       onChange = _ref.onChange;
+
+  if (isNaN(length) || length < 1) {
+    throw new Error('Length should be a number and greater than 0');
+  }
+
+  if (!allowedCharactersValues.some(function (value) {
+    return value === allowedCharacters;
+  })) {
+    throw new Error('Invalid value for allowedCharacters. Use alpha, numeric, or alphanumeric');
+  }
+
   var inputsRef = React.useRef([]);
-  var firstInputRef = React.useRef();
   var inputProps = propsMap[allowedCharacters];
   React.useImperativeHandle(ref, function () {
     return {
       focus: function focus() {
-        if (firstInputRef.current) {
-          firstInputRef.current.focus();
+        if (inputsRef.current) {
+          inputsRef.current[0].focus();
+        }
+      },
+      clear: function clear() {
+        if (inputsRef.current) {
+          for (var i = 0; i < inputsRef.current.length; i++) {
+            inputsRef.current[i].value = '';
+          }
+
+          inputsRef.current[0].focus();
         }
       }
     };
@@ -139,10 +159,6 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
       type: isPassword ? 'password' : inputProps.type,
       ref: function ref(el) {
         inputsRef.current[i] = el;
-
-        if (i === 0) {
-          firstInputRef.current = el;
-        }
       },
       maxLength: 1,
       className: inputClassName,
