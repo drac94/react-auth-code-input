@@ -10,6 +10,7 @@ const allowedCharactersValues = ['alpha', 'numeric', 'alphanumeric'] as const;
 type Props = {
   allowedCharacters?: typeof allowedCharactersValues[number];
   ariaLabel?: string;
+  autoFocus?: boolean;
   length?: number;
   containerClassName?: string;
   inputClassName?: string;
@@ -61,6 +62,7 @@ const AuthCode = forwardRef<AuthCodeRef, Props>(
     {
       allowedCharacters = 'alphanumeric',
       ariaLabel,
+      autoFocus = true,
       length = 6,
       containerClassName,
       inputClassName,
@@ -95,11 +97,14 @@ const AuthCode = forwardRef<AuthCodeRef, Props>(
           }
           inputsRef.current[0].focus();
         }
+        sendResult();
       }
     }));
 
     useEffect(() => {
-      inputsRef.current[0].focus();
+      if (autoFocus) {
+        inputsRef.current[0].focus();
+      }
     }, []);
 
     const sendResult = () => {

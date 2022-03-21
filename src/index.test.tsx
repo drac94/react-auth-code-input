@@ -10,7 +10,16 @@ import AuthCode from '.';
 describe('AuthCode', () => {
   it('should render the default component', () => {
     render(<AuthCode onChange={() => null} />);
-    expect(screen.getAllByRole('textbox')).toHaveLength(6);
+    const inputs = screen.getAllByRole('textbox');
+    expect(inputs).toHaveLength(6);
+    expect(inputs[0]).toHaveFocus();
+  });
+
+  it('should render the component but not focus the first input', () => {
+    render(<AuthCode autoFocus={false} onChange={() => null} />);
+    const inputs = screen.getAllByRole('textbox');
+    expect(inputs).toHaveLength(6);
+    expect(inputs[0]).not.toHaveFocus();
   });
 
   it('should render n inputs', () => {

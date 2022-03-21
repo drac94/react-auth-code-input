@@ -27,6 +27,8 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
   var _ref$allowedCharacter = _ref.allowedCharacters,
       allowedCharacters = _ref$allowedCharacter === void 0 ? 'alphanumeric' : _ref$allowedCharacter,
       ariaLabel = _ref.ariaLabel,
+      _ref$autoFocus = _ref.autoFocus,
+      autoFocus = _ref$autoFocus === void 0 ? true : _ref$autoFocus,
       _ref$length = _ref.length,
       length = _ref$length === void 0 ? 6 : _ref$length,
       containerClassName = _ref.containerClassName,
@@ -62,11 +64,15 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
 
           inputsRef.current[0].focus();
         }
+
+        sendResult();
       }
     };
   });
   React.useEffect(function () {
-    inputsRef.current[0].focus();
+    if (autoFocus) {
+      inputsRef.current[0].focus();
+    }
   }, []);
 
   var sendResult = function sendResult() {
