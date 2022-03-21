@@ -1,7 +1,5 @@
 import React, { useRef, useState } from 'react';
 
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { base16AteliersulphurpoolLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
 import './index.css';
 
@@ -57,11 +55,7 @@ const App = () => {
           <button onClick={() => AuthInputRef.current?.clear()}>Clear</button>
         </div>
         <code>
-          <SyntaxHighlighter
-            language='jsx'
-            style={base16AteliersulphurpoolLight}
-          >
-            {`
+          {`
 import React, { useRef, useState } from 'react';
 import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
 
@@ -87,7 +81,6 @@ const App = () => {
   );
 }
         `}
-          </SyntaxHighlighter>
         </code>
       </div>
     </div>

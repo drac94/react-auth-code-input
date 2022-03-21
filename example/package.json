@@ -7,8 +7,7 @@
     "react": "link:../node_modules/react",
     "react-auth-code-input": "link:..",
     "react-dom": "link:../node_modules/react-dom",
-    "react-scripts": "link:../node_modules/react-scripts",
-    "react-syntax-highlighter": "^15.5.0"
+    "react-scripts": "link:../node_modules/react-scripts"
   },
   "scripts": {
     "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
@@ -25,7 +24,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "@types/react-syntax-highlighter": "^13.5.2"
-  }
+  "devDependencies": {}
 }
