@@ -3,6 +3,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = require('react');
 var React__default = _interopDefault(React);
 
+var allowedCharactersValues = ['alpha', 'numeric', 'alphanumeric'];
 var propsMap = {
   alpha: {
     type: 'text',
@@ -22,11 +23,12 @@ var propsMap = {
     max: '9'
   }
 };
-
-var AuthCode = function AuthCode(_ref) {
+var AuthCode = React.forwardRef(function (_ref, ref) {
   var _ref$allowedCharacter = _ref.allowedCharacters,
       allowedCharacters = _ref$allowedCharacter === void 0 ? 'alphanumeric' : _ref$allowedCharacter,
       ariaLabel = _ref.ariaLabel,
+      _ref$autoFocus = _ref.autoFocus,
+      autoFocus = _ref$autoFocus === void 0 ? true : _ref$autoFocus,
       _ref$length = _ref.length,
       length = _ref$length === void 0 ? 6 : _ref$length,
       containerClassName = _ref.containerClassName,
@@ -34,10 +36,43 @@ var AuthCode = function AuthCode(_ref) {
       _ref$isPassword = _ref.isPassword,
       isPassword = _ref$isPassword === void 0 ? false : _ref$isPassword,
       onChange = _ref.onChange;
+
+  if (isNaN(length) || length < 1) {
+    throw new Error('Length should be a number and greater than 0');
+  }
+
+  if (!allowedCharactersValues.some(function (value) {
+    return value === allowedCharacters;
+  })) {
+    throw new Error('Invalid value for allowedCharacters. Use alpha, numeric, or alphanumeric');
+  }
+
   var inputsRef = React.useRef([]);
   var inputProps = propsMap[allowedCharacters];
+  React.useImperativeHandle(ref, function () {
+    return {
+      focus: function focus() {
+        if (inputsRef.current) {
+          inputsRef.current[0].focus();
+        }
+      },
+      clear: function clear() {
+        if (inputsRef.current) {
+          for (var i = 0; i < inputsRef.current.length; i++) {
+            inputsRef.current[i].value = '';
+          }
+
+          inputsRef.current[0].focus();
+        }
+
+        sendResult();
+      }
+    };
+  });
   React.useEffect(function () {
-    inputsRef.current[0].focus();
+    if (autoFocus) {
+      inputsRef.current[0].focus();
+    }
   }, []);
 
   var sendResult = function sendResult() {
@@ -129,7 +164,7 @@ var AuthCode = function AuthCode(_ref) {
     }, inputProps, {
       type: isPassword ? 'password' : inputProps.type,
       ref: function ref(el) {
-        return inputsRef.current[i] = el;
+        inputsRef.current[i] = el;
       },
       maxLength: 1,
       className: inputClassName,
@@ -145,7 +180,7 @@ var AuthCode = function AuthCode(_ref) {
   return React__default.createElement("div", {
     className: containerClassName
   }, inputs);
-};
+});
 
 module.exports = AuthCode;
 //# sourceMappingURL=index.js.map

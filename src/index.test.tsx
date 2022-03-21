@@ -10,7 +10,16 @@ import AuthCode from '.';
 describe('AuthCode', () => {
   it('should render the default component', () => {
     render(<AuthCode onChange={() => null} />);
-    expect(screen.getAllByRole('textbox')).toHaveLength(6);
+    const inputs = screen.getAllByRole('textbox');
+    expect(inputs).toHaveLength(6);
+    expect(inputs[0]).toHaveFocus();
+  });
+
+  it('should render the component but not focus the first input', () => {
+    render(<AuthCode autoFocus={false} onChange={() => null} />);
+    const inputs = screen.getAllByRole('textbox');
+    expect(inputs).toHaveLength(6);
+    expect(inputs[0]).not.toHaveFocus();
   });
 
   it('should render n inputs', () => {
@@ -307,6 +316,50 @@ describe('AuthCode', () => {
       expect(firstInput).toHaveValue(1);
       expect(lastInput).toHaveValue(5);
       expect(onChangeFn).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Bad properties', () => {
+    it('should throw an exception when the length prop is less than 1', () => {
+      const err = console.error;
+      console.error = jest.fn();
+      const onChangeFn = jest.fn();
+      const badRender = () => {
+        render(<AuthCode onChange={onChangeFn} length={0} />);
+      };
+
+      expect(badRender).toThrowError(
+        'Length should be a number and greater than 0'
+      );
+      console.error = err;
+    });
+
+    it('should throw an exception when the length prop is not a number', () => {
+      const err = console.error;
+      console.error = jest.fn();
+      const onChangeFn = jest.fn();
+      const badRender = () => {
+        // @ts-ignore
+        render(<AuthCode onChange={onChangeFn} length='hello' />);
+      };
+
+      expect(badRender).toThrowError(
+        'Length should be a number and greater than 0'
+      );
+      console.error = err;
+    });
+
+    it('should throw an exception when the allowedCharacters prop s not valid', () => {
+      const err = console.error;
+      console.error = jest.fn();
+      const onChangeFn = jest.fn();
+      const badRender = () => {
+        // @ts-ignore
+        render(<AuthCode onChange={onChangeFn} allowedCharacters='invalid' />);
+      };
+
+      expect(badRender).toThrowError('Invalid value for allowedCharacters');
+      console.error = err;
     });
   });
 });

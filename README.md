@@ -1,8 +1,8 @@
-![image](https://user-images.githubusercontent.com/1719915/82956329-2f7e8700-9f76-11ea-978f-ec7135c79311.png)
+![image](https://user-images.githubusercontent.com/1719915/159336862-113dfbdd-e415-4237-afdb-f9df6628aaf7.png)
 
 # React Auth Code Input
 
-> One-time password (OTP) React input component, uncontrolled, zero dependencies, fully tested.
+> One-time password (OTP) React component, zero dependencies, fully tested.
 
 [![NPM](https://img.shields.io/npm/v/react-auth-code-input.svg)](https://www.npmjs.com/package/react-auth-code-input) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
@@ -26,42 +26,118 @@ or
 yarn add react-auth-code-input
 ```
 
-## Usage
+## Basic Usage
 
-```jsx
+```tsx
 import React, { useState } from 'react';
 import AuthCode from 'react-auth-code-input';
 
 const App = () => {
-  const [result, setResult] = useState('');
+  const [result, setResult] = useState();
+  const handleOnChange = (res: string) => {
+    setResult(res);
+  };
+
+  return <AuthCode onChange={handleOnChange} />;
+};
+```
+
+## Mode
+
+By default you can type anything in the inputs as the `allowedCharacters` prop is defaulted to `alphanumeric` but you can also choose between allowing only letters or only numbers by setting the prop to `alpha` or `numeric` respectively.
+
+```tsx
+import React, { useState } from 'react';
+import AuthCode from 'react-auth-code-input';
+
+const App = () => {
+  const [result, setResult] = useState();
+  const handleOnChange = (res: string) => {
+    setResult(res);
+  };
+
+  return <AuthCode allowedCharacters='numeric' onChange={handleOnChange} />;
+};
+```
+
+## Focus
+
+By default the first input is focused when the component is mounted, you can opt-out from this by setting the `autoFocus` prop to `false`, and then you can handle the focus manually by passing a reference.
+
+```tsx
+import React, { useRef, useState } from 'react';
+import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
+
+const App = () => {
+  const AuthInputRef = useRef<AuthCodeRef>(null);
+  const [result, setResult] = useState();
   const handleOnChange = (res: string) => {
     setResult(res);
   };
 
   return (
-    <AuthCode
-      length={5}
-      onChange={handleOnChange}
-      containerClassName='container'
-      inputClassName='input'
-    />
+    <>
+      <AuthCode
+        autoFocus={false}
+        onChange={handleOnChange}
+        ref={AuthInputRef}
+      />
+      <button onClick={() => AuthInputRef.current?.focus()}>Focus</button>
+    </>
   );
 };
 ```
 
+## Clear
+
+You can clear all the inputs by passing a reference and then calling the `clear` method.
+
+```tsx
+import React, { useRef, useState } from 'react';
+import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
+
+const App = () => {
+  const AuthInputRef = useRef<AuthCodeRef>(null);
+  const [result, setResult] = useState();
+  const handleOnChange = (res: string) => {
+    setResult(res);
+  };
+
+  return (
+    <>
+      <AuthCode onChange={handleOnChange} ref={AuthInputRef} />
+      <button onClick={() => AuthInputRef.current?.clear()}>Clear</button>
+    </>
+  );
+};
+```
+
+## SMS Autofill
+
+This component supports autofill from SMS's received, tested on Safari and Chrome in iOS.
+
 ## Props
 
-| Prop                 | Type                    | Description                                                 | Default Value  | Observations                       |
-| :------------------- | :---------------------- | :---------------------------------------------------------- | :------------- | :--------------------------------- |
-| `allowedCharacters`  | String                  | Type of allowed characters for your code.                   | `alphanumeric` | `alpha`, `alphanumeric`, `numeric` |
-| `ariaLabel`          | String                  | Accessibility.                                              |                |                                    |
-| `length`             | Number                  | The number of inputs to display.                            | 6              |                                    |
-| `containerClassName` | String                  | The styles to be applied to the container.                  |                |                                    |
-| `inputClassName`     | String                  | The styles to be applied to each input.                     |                |                                    |
-| `onChange`           | Function(value: String) | Callback function called every time an input value changes. |                |                                    |
-| `isPassword`         | Boolean                 | Whether to display the inputs as passwords or not.          | false          |                                    |
+| Prop                 | Type                    | Description                                                 | Default Value  | Observations                                     |
+| :------------------- | :---------------------- | :---------------------------------------------------------- | :------------- | :----------------------------------------------- |
+| `allowedCharacters`  | String                  | Type of allowed characters for your code.                   | `alphanumeric` | Valid values: `alpha`, `alphanumeric`, `numeric` |
+| `ariaLabel`          | String                  | Accessibility.                                              |                |                                                  |
+| `autoFocus`          | Boolean                 | Wether the first input is focused on mount or not..         | true           |                                                  |
+| `length`             | Number                  | The number of inputs to display.                            | 6              |                                                  |
+| `containerClassName` | String                  | The styles to be applied to the container.                  |                |                                                  |
+| `inputClassName`     | String                  | The styles to be applied to each input.                     |                |                                                  |
+| `onChange`           | Function(value: String) | Callback function called every time an input value changes. |                | Required                                         |
+| `isPassword`         | Boolean                 | Whether to display the inputs as passwords or not.          | false          |                                                  |
 
 ## Changelog
+
+### 3.1.0
+
+- Add `autoFocus` prop set to true by default to not break current usages.
+- Expose a `focus` method to handle the focus of the first input manually.
+- Expose a `clear` method to clear the input programmatically.
+- Add validations for when not using typescript.
+- Update React peerDependency to use any version 16+.
 
 ### 3.0.0
 
@@ -98,22 +174,7 @@ const App = () => {
 
 ### 1.0.0
 
-- Initial Version.
-
-## Props versions 1 and 2
-
-| Prop                 | Type                    | Description                                                                     | Default Value  | Observations                   |
-| :------------------- | :---------------------- | :------------------------------------------------------------------------------ | :------------- | :----------------------------- |
-| `allowedCharacters`  | String                  | Regex for allowed characters                                                    | `[A-Za-z0-9]+` |                                |
-| `ariaLabel`          | String                  | Accessibility                                                                   |                |                                |
-| `characters`         | Number                  | The number of inputs to display                                                 | 6              |                                |
-| `containerClassName` | String                  | The styles to be applied to the container                                       |                |                                |
-| `inputClassName`     | String                  | The styles to be applied to each input                                          |                |                                |
-| `inputType`          | String                  | The type of the inputs                                                          | text           | text, number or password       |
-| `onChange`           | Function(value: String) | Callback function called every time an input value changes                      |                |                                |
-| ~~`password`~~       | Boolean                 | If present changes the type of the input to password, by default is set to text | false          | deprecated since version 2.0.0 |
-| ~~`inputStyle`~~     | Object                  | The styles to be applied to each input                                          |                | deprecated since version 1.2.0 |
-| ~~`containerStyle`~~ | Object                  | The styles to be applied to the container                                       |                | deprecated since version 1.2.0 |
+- Initial Version. | | deprecated since version 1.2.0 |
 
 ## License
 

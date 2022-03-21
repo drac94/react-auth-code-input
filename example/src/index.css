@@ -6,9 +6,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(20deg, rgb(219, 112, 147), rgb(218, 163, 87))
-    no-repeat fixed;
-  background-repeat: no-repeat;
   text-align: center;
 }
 
@@ -16,7 +13,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
 }
 
 .badges > * {
@@ -30,12 +26,7 @@ code {
   background: rgba(255, 255, 255, 0.2);
   white-space: pre;
   text-align: left;
-  color: rgb(255, 255, 255);
   padding: 12px;
-}
-
-a {
-  color: white;
 }
 
 .container {
@@ -49,7 +40,7 @@ a {
   font-size: 40px;
   text-align: center;
   margin-right: 12px;
-  border: 1px solid white;
+  border: 1px solid #787878;
   text-transform: uppercase;
 }
 
@@ -57,16 +48,14 @@ a {
   background-color: #333;
 }
 
-ul {
+table {
   text-align: left;
+  margin: 0 auto;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type='number'] {
-  -moz-appearance: textfield;
+table,
+td {
+  padding: 8px;
+  border: 1px solid;
+  border-collapse: collapse;
 }
