@@ -131,6 +131,14 @@ This component supports autofill from SMS's received, tested on Safari and Chrom
 
 ## Changelog
 
+### 3.1.0
+
+- Add `autoFocus` prop set to true by default to not break current usages.
+- Expose a `focus` method to handle the focus of the first input manually.
+- Expose a `clear` method to clear the input programmatically.
+- Add validations for when not using typescript.
+- Update React peerDependency to use any version 16+.
+
 ### 3.0.0
 
 - Change the way the allowed characters are handled by using 3 predefined modes: alpha, alphanumeric, and numeric, allowing to have more control when validating the values introduced in the inputs.
@@ -166,22 +174,7 @@ This component supports autofill from SMS's received, tested on Safari and Chrom
 
 ### 1.0.0
 
-- Initial Version.
-
-## Props versions 1 and 2
-
-| Prop                 | Type                    | Description                                                                     | Default Value  | Observations                   |
-| :------------------- | :---------------------- | :------------------------------------------------------------------------------ | :------------- | :----------------------------- |
-| `allowedCharacters`  | String                  | Regex for allowed characters                                                    | `[A-Za-z0-9]+` |                                |
-| `ariaLabel`          | String                  | Accessibility                                                                   |                |                                |
-| `characters`         | Number                  | The number of inputs to display                                                 | 6              |                                |
-| `containerClassName` | String                  | The styles to be applied to the container                                       |                |                                |
-| `inputClassName`     | String                  | The styles to be applied to each input                                          |                |                                |
-| `inputType`          | String                  | The type of the inputs                                                          | text           | text, number or password       |
-| `onChange`           | Function(value: String) | Callback function called every time an input value changes                      |                |                                |
-| ~~`password`~~       | Boolean                 | If present changes the type of the input to password, by default is set to text | false          | deprecated since version 2.0.0 |
-| ~~`inputStyle`~~     | Object                  | The styles to be applied to each input                                          |                | deprecated since version 1.2.0 |
-| ~~`containerStyle`~~ | Object                  | The styles to be applied to the container                                       |                | deprecated since version 1.2.0 |
+- Initial Version. | | deprecated since version 1.2.0 |
 
 ## License
 
