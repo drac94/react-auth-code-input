@@ -137,9 +137,11 @@ const AuthCode = forwardRef<AuthCodeRef, Props>(
       const { key } = e;
       const target = e.target as HTMLInputElement;
       if (key === 'Backspace') {
-        if (target.value === '' && target.previousElementSibling !== null) {
+        if (target.value === '') {
           if (target.previousElementSibling !== null) {
-            (target.previousElementSibling as HTMLInputElement).focus();
+            const t = target.previousElementSibling as HTMLInputElement;
+            t.value = '';
+            t.focus();
             e.preventDefault();
           }
         } else {

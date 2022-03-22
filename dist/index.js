@@ -111,9 +111,11 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
     var target = e.target;
 
     if (key === 'Backspace') {
-      if (target.value === '' && target.previousElementSibling !== null) {
+      if (target.value === '') {
         if (target.previousElementSibling !== null) {
-          target.previousElementSibling.focus();
+          var t = target.previousElementSibling;
+          t.value = '';
+          t.focus();
           e.preventDefault();
         }
       } else {
