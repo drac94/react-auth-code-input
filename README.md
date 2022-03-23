@@ -1,4 +1,4 @@
-![image](https://user-images.githubusercontent.com/1719915/159336862-113dfbdd-e415-4237-afdb-f9df6628aaf7.png)
+![image](https://user-images.githubusercontent.com/1719915/159784302-4bb83708-e993-4800-9bcf-091ecb709ef7.png)
 
 # React Auth Code Input
 
