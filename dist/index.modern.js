@@ -24,6 +24,7 @@ const AuthCode = forwardRef(({
   allowedCharacters: _allowedCharacters = 'alphanumeric',
   ariaLabel,
   autoFocus: _autoFocus = true,
+  disabled,
   length: _length = 6,
   containerClassName,
   inputClassName,
@@ -163,7 +164,8 @@ const AuthCode = forwardRef(({
       maxLength: 1,
       className: inputClassName,
       autoComplete: i === 0 ? 'one-time-code' : 'off',
-      "aria-label": ariaLabel ? `${ariaLabel}. Character ${i + 1}.` : `Character ${i + 1}.`
+      "aria-label": ariaLabel ? `${ariaLabel}. Character ${i + 1}.` : `Character ${i + 1}.`,
+      disabled: disabled
     })));
   }
 

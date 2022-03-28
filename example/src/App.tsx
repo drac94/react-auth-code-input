@@ -7,6 +7,7 @@ const App = () => {
   const AuthInputRef = useRef<AuthCodeRef>(null);
   const [result, setResult] = useState<string>('');
   const [isPassword, setIsPassword] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
   const handleOnChange = (res: string) => {
     setResult(res);
   };
@@ -54,6 +55,7 @@ const App = () => {
             containerClassName='container'
             inputClassName='input'
             isPassword={isPassword}
+            disabled={disabled}
           />
           <p>
             A message with a verification code has been sent to <br />
@@ -69,6 +71,15 @@ const App = () => {
                 onChange={(e) => setIsPassword(e.target.checked)}
               />
               <label htmlFor='isPassword'>Password</label>
+            </div>
+            <div>
+              <input
+                type='checkbox'
+                id='disabled'
+                name='disabled'
+                onChange={(e) => setDisabled(e.target.checked)}
+              />
+              <label htmlFor='disabled'>Disabled</label>
             </div>
             <button onClick={() => AuthInputRef.current?.focus()}>Focus</button>
             <button onClick={() => AuthInputRef.current?.clear()}>Clear</button>
