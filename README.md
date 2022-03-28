@@ -44,7 +44,7 @@ const App = () => {
 
 ## Mode
 
-By default you can type anything in the inputs as the `allowedCharacters` prop is defaulted to `alphanumeric` but you can also choose between allowing only letters or only numbers by setting the prop to `alpha` or `numeric` respectively.
+By default you can type numbers and letters in the inputs as the `allowedCharacters` prop is defaulted to `alphanumeric` but you can also choose between allowing only letters or only numbers by setting the prop to `alpha` or `numeric` respectively.
 
 ```tsx
 import React, { useState } from 'react';

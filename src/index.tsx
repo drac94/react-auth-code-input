@@ -11,6 +11,7 @@ type Props = {
   allowedCharacters?: typeof allowedCharactersValues[number];
   ariaLabel?: string;
   autoFocus?: boolean;
+  disabled?: boolean;
   length?: number;
   containerClassName?: string;
   inputClassName?: string;
@@ -63,6 +64,7 @@ const AuthCode = forwardRef<AuthCodeRef, Props>(
       allowedCharacters = 'alphanumeric',
       ariaLabel,
       autoFocus = true,
+      disabled,
       length = 6,
       containerClassName,
       inputClassName,
@@ -201,6 +203,7 @@ const AuthCode = forwardRef<AuthCodeRef, Props>(
               ? `${ariaLabel}. Character ${i + 1}.`
               : `Character ${i + 1}.`
           }
+          disabled={disabled}
         />
       );
     }
