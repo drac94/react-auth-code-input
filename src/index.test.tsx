@@ -38,6 +38,28 @@ describe('AuthCode', () => {
     expect(onChangeFn).toHaveBeenCalledTimes(1);
   });
 
+  it('should delete the previous value if the current input is empty', async () => {
+    const onChangeFn = jest.fn();
+    render(<AuthCode onChange={onChangeFn} />);
+
+    const input4 = screen.getAllByRole('textbox')[4] as HTMLInputElement;
+    const input5 = screen.getAllByRole('textbox')[5] as HTMLInputElement;
+
+    userEvent.type(input4, 'A');
+    expect(input4).toHaveValue('A');
+
+    userEvent.type(input5, 'B');
+    expect(input5).toHaveValue('B');
+
+    userEvent.keyboard('[Backspace]');
+    expect(input5).toHaveValue('');
+    expect(input5).toHaveFocus();
+
+    userEvent.keyboard('[Backspace]');
+    expect(input4).toHaveValue('');
+    expect(input4).toHaveFocus();
+  });
+
   describe('Alphanumeric', () => {
     it('should not change the input value when typing a not allowed character', async () => {
       const onChangeFn = jest.fn();

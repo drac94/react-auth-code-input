@@ -11,6 +11,7 @@ type Props = {
   allowedCharacters?: typeof allowedCharactersValues[number];
   ariaLabel?: string;
   autoFocus?: boolean;
+  disabled?: boolean;
   length?: number;
   containerClassName?: string;
   inputClassName?: string;
@@ -63,6 +64,7 @@ const AuthCode = forwardRef<AuthCodeRef, Props>(
       allowedCharacters = 'alphanumeric',
       ariaLabel,
       autoFocus = true,
+      disabled,
       length = 6,
       containerClassName,
       inputClassName,
@@ -137,9 +139,11 @@ const AuthCode = forwardRef<AuthCodeRef, Props>(
       const { key } = e;
       const target = e.target as HTMLInputElement;
       if (key === 'Backspace') {
-        if (target.value === '' && target.previousElementSibling !== null) {
+        if (target.value === '') {
           if (target.previousElementSibling !== null) {
-            (target.previousElementSibling as HTMLInputElement).focus();
+            const t = target.previousElementSibling as HTMLInputElement;
+            t.value = '';
+            t.focus();
             e.preventDefault();
           }
         } else {
@@ -199,6 +203,7 @@ const AuthCode = forwardRef<AuthCodeRef, Props>(
               ? `${ariaLabel}. Character ${i + 1}.`
               : `Character ${i + 1}.`
           }
+          disabled={disabled}
         />
       );
     }

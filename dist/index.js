@@ -29,6 +29,7 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
       ariaLabel = _ref.ariaLabel,
       _ref$autoFocus = _ref.autoFocus,
       autoFocus = _ref$autoFocus === void 0 ? true : _ref$autoFocus,
+      disabled = _ref.disabled,
       _ref$length = _ref.length,
       length = _ref$length === void 0 ? 6 : _ref$length,
       containerClassName = _ref.containerClassName,
@@ -111,9 +112,11 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
     var target = e.target;
 
     if (key === 'Backspace') {
-      if (target.value === '' && target.previousElementSibling !== null) {
+      if (target.value === '') {
         if (target.previousElementSibling !== null) {
-          target.previousElementSibling.focus();
+          var t = target.previousElementSibling;
+          t.value = '';
+          t.focus();
           e.preventDefault();
         }
       } else {
@@ -169,7 +172,8 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
       maxLength: 1,
       className: inputClassName,
       autoComplete: i === 0 ? 'one-time-code' : 'off',
-      "aria-label": ariaLabel ? ariaLabel + ". Character " + (i + 1) + "." : "Character " + (i + 1) + "."
+      "aria-label": ariaLabel ? ariaLabel + ". Character " + (i + 1) + "." : "Character " + (i + 1) + ".",
+      disabled: disabled
     })));
   };
 

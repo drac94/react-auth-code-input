@@ -7,6 +7,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  color: #494949;
 }
 
 .main {
@@ -18,44 +19,53 @@ body {
 .badges > * {
   margin-right: 8px;
 }
-
-code {
-  display: block;
-  margin-bottom: 12px;
-  margin-top: 1em;
-  background: rgba(255, 255, 255, 0.2);
-  white-space: pre;
-  text-align: left;
-  padding: 12px;
-}
-
 .container {
   padding: 16px;
 }
 
 .input {
-  width: 2ch;
-  padding: 8px;
-  border-radius: 8px;
-  font-size: 40px;
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  font-size: 24px;
   text-align: center;
   margin-right: 12px;
-  border: 1px solid #787878;
   text-transform: uppercase;
+  color: #494949;
+  font-family: SF Pro Text, SF Pro Icons, Helvetica Neue, Helvetica, Arial,
+    sans-serif;
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  background: #fff;
+  background-clip: padding-box;
 }
 
-.github-fork-ribbon:before {
-  background-color: #333;
+.input:focus {
+  appearance: none;
+  outline: 0;
+  box-shadow: 0 0 0 3px rgb(131 192 253 / 50%);
 }
 
-table {
-  text-align: left;
-  margin: 0 auto;
+button {
+  appearance: none;
+  background: #0071e3;
+  border-radius: 980px;
+  text-align: center;
+  border: none;
+  color: #fff;
+  margin: 8px;
+  padding: 4px 11px;
 }
 
-table,
-td {
-  padding: 8px;
-  border: 1px solid;
-  border-collapse: collapse;
+p {
+  font-size: 17px;
+  line-height: 1.47059;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #d6d6d6;
+  padding: 8px 16px;
 }

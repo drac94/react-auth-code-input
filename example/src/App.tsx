@@ -6,6 +6,8 @@ import './index.css';
 const App = () => {
   const AuthInputRef = useRef<AuthCodeRef>(null);
   const [result, setResult] = useState<string>('');
+  const [isPassword, setIsPassword] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
   const handleOnChange = (res: string) => {
     setResult(res);
   };
@@ -43,45 +45,46 @@ const App = () => {
       </p>
       <div>
         <div>
+          <h1>
+            Two-Factor
+            <br /> Authentication
+          </h1>
           <AuthCode
             ref={AuthInputRef}
             onChange={handleOnChange}
             containerClassName='container'
             inputClassName='input'
+            isPassword={isPassword}
+            disabled={disabled}
           />
-
-          <p>Result: {result}</p>
-          <button onClick={() => AuthInputRef.current?.focus()}>Focus</button>
-          <button onClick={() => AuthInputRef.current?.clear()}>Clear</button>
+          <p>
+            A message with a verification code has been sent to <br />
+            your devices. Enter the code to continue.
+          </p>
+          <p>Code: {result}</p>
+          <div className='controls'>
+            <div>
+              <input
+                type='checkbox'
+                id='isPassword'
+                name='isPassword'
+                onChange={(e) => setIsPassword(e.target.checked)}
+              />
+              <label htmlFor='isPassword'>Password</label>
+            </div>
+            <div>
+              <input
+                type='checkbox'
+                id='disabled'
+                name='disabled'
+                onChange={(e) => setDisabled(e.target.checked)}
+              />
+              <label htmlFor='disabled'>Disabled</label>
+            </div>
+            <button onClick={() => AuthInputRef.current?.focus()}>Focus</button>
+            <button onClick={() => AuthInputRef.current?.clear()}>Clear</button>
+          </div>
         </div>
-        <code>
-          {`
-import React, { useRef, useState } from 'react';
-import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
-
-const App = () => {
-  const AuthInputRef = useRef<AuthCodeRef>(null);
-  const [result, setResult] = useState<string>('');
-  const handleOnChange = (res: string) => {
-    setResult(res);
-  };
-  return (
-    <div>
-      <AuthCode
-        ref={AuthInputRef}
-        onChange={handleOnChange}
-        containerClassName='container'
-        inputClassName='input'
-      />
-
-      <p>Result: {result}</p>
-      <button onClick={() => AuthInputRef.current?.focus()}>Focus</button>
-      <button onClick={() => AuthInputRef.current?.clear()}>Clear</button>
-    </div>
-  );
-}
-        `}
-        </code>
       </div>
     </div>
   );
