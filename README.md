@@ -26,6 +26,8 @@ or
 yarn add react-auth-code-input
 ```
 
+# Version 3+
+
 ## Basic Usage
 
 ```tsx
@@ -122,20 +124,26 @@ This component supports autofill from SMS's received, tested on Safari and Chrom
 | :------------------- | :---------------------- | :---------------------------------------------------------- | :------------- | :----------------------------------------------- |
 | `allowedCharacters`  | String                  | Type of allowed characters for your code.                   | `alphanumeric` | Valid values: `alpha`, `alphanumeric`, `numeric` |
 | `ariaLabel`          | String                  | Accessibility.                                              |                |                                                  |
-| `autoFocus`          | Boolean                 | Wether the first input is focused on mount or not..         | true           |                                                  |
+| `autoFocus`          | Boolean                 | Wether the first input is focused on mount or not..         | true           | Since version 3.1.0                              |
 | `length`             | Number                  | The number of inputs to display.                            | 6              |                                                  |
 | `containerClassName` | String                  | The styles to be applied to the container.                  |                |                                                  |
 | `inputClassName`     | String                  | The styles to be applied to each input.                     |                |                                                  |
 | `onChange`           | Function(value: String) | Callback function called every time an input value changes. |                | Required                                         |
 | `isPassword`         | Boolean                 | Whether to display the inputs as passwords or not.          | false          |                                                  |
+| `disabled`           | Boolean                 | Makes all the inputs disabled if true.                      | false          | Since version 3.1.1                              |
 
 ## Changelog
 
 ### 3.1.0
 
+- Add `disabled` prop to disable all the inputs.
+- Make the backspace delete the previous character if the current is empty. Previously it just moved the focus making the user hit twice the backspace to delete the value.
+
+### 3.1.0
+
 - Add `autoFocus` prop set to true by default to not break current usages.
-- Expose a `focus` method to handle the focus of the first input manually.
-- Expose a `clear` method to clear the input programmatically.
+- Expose a `focus` method using references to handle the focus of the first input manually.
+- Expose a `clear` method using references to clear the input programmatically.
 - Add validations for when not using typescript.
 - Update React peerDependency to use any version 16+.
 
@@ -145,36 +153,6 @@ This component supports autofill from SMS's received, tested on Safari and Chrom
 - Improved logic.
 - Improved tests.
 - Improved types.
-
-### 2.1.0
-
-- Support to fill one-time-codes directly from SMS's.
-- Displays numeric keyboard on mobile devices when the `inputType` prop is set to `number`
-- Add `ariaLabel` prop for accessibility.
-
-### 2.0.0
-
-- Remove `inputStyle` prop in favor of `inputClassName`.
-- Remove `containerStyle` prop in favor of `containerClassName`.
-- Remove `password` prop in favor of `inputType` which accepts _text_, _password_ or _number_ value.
-
-### 1.2.1
-
-- Add missing dist files.
-
-### 1.2.0
-
-- Add `inputClassName` and `containerClassName` props.
-- Deprecate `inputStyle` and `containerStyle`.
-- Make `onChange` prop mandatory.
-
-### 1.1.0
-
-- Typescript support.
-
-### 1.0.0
-
-- Initial Version. | | deprecated since version 1.2.0 |
 
 ## License
 
