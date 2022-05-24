@@ -17,6 +17,7 @@ type Props = {
   inputClassName?: string;
   isPassword?: boolean;
   placeholderCharacter?: string & { length: 1 };
+  showPlaceholder: false;
   onChange: (res: string) => void;
 };
 
@@ -69,6 +70,7 @@ const AuthCode = forwardRef<AuthCodeRef, Props>(
       length = 6,
       containerClassName,
       inputClassName,
+      showPlaceholder,
       placeholderCharacter = '0',
       isPassword = false,
       onChange
@@ -198,7 +200,7 @@ const AuthCode = forwardRef<AuthCodeRef, Props>(
             inputsRef.current[i] = el;
           }}
           maxLength={1}
-          placeholder={placeholderCharacter}
+          placeholder={showPlaceholder ? placeholderCharacter : ' '}
           className={inputClassName}
           autoComplete={i === 0 ? 'one-time-code' : 'off'}
           aria-label={
