@@ -7,7 +7,7 @@ import React, {
 
 const allowedCharactersValues = ['alpha', 'numeric', 'alphanumeric'] as const;
 
-type Props = {
+export type AuthCodeProps = {
   allowedCharacters?: typeof allowedCharactersValues[number];
   ariaLabel?: string;
   autoFocus?: boolean;
@@ -58,7 +58,7 @@ const propsMap: { [key: string]: InputProps } = {
   }
 };
 
-const AuthCode = forwardRef<AuthCodeRef, Props>(
+export const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
   (
     {
       allowedCharacters = 'alphanumeric',
