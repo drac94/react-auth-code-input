@@ -15,6 +15,12 @@ describe('AuthCode', () => {
     expect(inputs[0]).toHaveFocus();
   });
 
+  it('should display a placeholder if passed as prop', () => {
+    render(<AuthCode onChange={() => null} placeholder='*' />);
+    const inputs = screen.getAllByPlaceholderText('*');
+    expect(inputs).toHaveLength(6);
+  });
+
   it('should render the component but not focus the first input', () => {
     render(<AuthCode autoFocus={false} onChange={() => null} />);
     const inputs = screen.getAllByRole('textbox');
