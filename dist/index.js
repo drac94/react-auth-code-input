@@ -29,13 +29,14 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
       ariaLabel = _ref.ariaLabel,
       _ref$autoFocus = _ref.autoFocus,
       autoFocus = _ref$autoFocus === void 0 ? true : _ref$autoFocus,
-      disabled = _ref.disabled,
-      _ref$length = _ref.length,
-      length = _ref$length === void 0 ? 6 : _ref$length,
       containerClassName = _ref.containerClassName,
+      disabled = _ref.disabled,
       inputClassName = _ref.inputClassName,
       _ref$isPassword = _ref.isPassword,
       isPassword = _ref$isPassword === void 0 ? false : _ref$isPassword,
+      _ref$length = _ref.length,
+      length = _ref$length === void 0 ? 6 : _ref$length,
+      placeholder = _ref.placeholder,
       onChange = _ref.onChange;
 
   if (isNaN(length) || length < 1) {
@@ -173,7 +174,8 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
       className: inputClassName,
       autoComplete: i === 0 ? 'one-time-code' : 'off',
       "aria-label": ariaLabel ? ariaLabel + ". Character " + (i + 1) + "." : "Character " + (i + 1) + ".",
-      disabled: disabled
+      disabled: disabled,
+      placeholder: placeholder
     })));
   };
 

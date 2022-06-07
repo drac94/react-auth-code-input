@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
 
-const allowedCharactersValues = ['alpha', 'numeric', 'alphanumeric'];
-const propsMap = {
+var allowedCharactersValues = ['alpha', 'numeric', 'alphanumeric'];
+var propsMap = {
   alpha: {
     type: 'text',
     inputMode: 'text',
@@ -20,63 +20,71 @@ const propsMap = {
     max: '9'
   }
 };
-const AuthCode = forwardRef(({
-  allowedCharacters: _allowedCharacters = 'alphanumeric',
-  ariaLabel,
-  autoFocus: _autoFocus = true,
-  disabled,
-  length: _length = 6,
-  containerClassName,
-  inputClassName,
-  isPassword: _isPassword = false,
-  onChange
-}, ref) => {
-  if (isNaN(_length) || _length < 1) {
+var AuthCode = forwardRef(function (_ref, ref) {
+  var _ref$allowedCharacter = _ref.allowedCharacters,
+      allowedCharacters = _ref$allowedCharacter === void 0 ? 'alphanumeric' : _ref$allowedCharacter,
+      ariaLabel = _ref.ariaLabel,
+      _ref$autoFocus = _ref.autoFocus,
+      autoFocus = _ref$autoFocus === void 0 ? true : _ref$autoFocus,
+      containerClassName = _ref.containerClassName,
+      disabled = _ref.disabled,
+      inputClassName = _ref.inputClassName,
+      _ref$isPassword = _ref.isPassword,
+      isPassword = _ref$isPassword === void 0 ? false : _ref$isPassword,
+      _ref$length = _ref.length,
+      length = _ref$length === void 0 ? 6 : _ref$length,
+      placeholder = _ref.placeholder,
+      onChange = _ref.onChange;
+
+  if (isNaN(length) || length < 1) {
     throw new Error('Length should be a number and greater than 0');
   }
 
-  if (!allowedCharactersValues.some(value => value === _allowedCharacters)) {
+  if (!allowedCharactersValues.some(function (value) {
+    return value === allowedCharacters;
+  })) {
     throw new Error('Invalid value for allowedCharacters. Use alpha, numeric, or alphanumeric');
   }
 
-  const inputsRef = useRef([]);
-  const inputProps = propsMap[_allowedCharacters];
-  useImperativeHandle(ref, () => ({
-    focus: () => {
-      if (inputsRef.current) {
-        inputsRef.current[0].focus();
-      }
-    },
-    clear: () => {
-      if (inputsRef.current) {
-        for (let i = 0; i < inputsRef.current.length; i++) {
-          inputsRef.current[i].value = '';
+  var inputsRef = useRef([]);
+  var inputProps = propsMap[allowedCharacters];
+  useImperativeHandle(ref, function () {
+    return {
+      focus: function focus() {
+        if (inputsRef.current) {
+          inputsRef.current[0].focus();
+        }
+      },
+      clear: function clear() {
+        if (inputsRef.current) {
+          for (var i = 0; i < inputsRef.current.length; i++) {
+            inputsRef.current[i].value = '';
+          }
+
+          inputsRef.current[0].focus();
         }
 
-        inputsRef.current[0].focus();
+        sendResult();
       }
-
-      sendResult();
-    }
-  }));
-  useEffect(() => {
-    if (_autoFocus) {
+    };
+  });
+  useEffect(function () {
+    if (autoFocus) {
       inputsRef.current[0].focus();
     }
   }, []);
 
-  const sendResult = () => {
-    const res = inputsRef.current.map(input => input.value).join('');
+  var sendResult = function sendResult() {
+    var res = inputsRef.current.map(function (input) {
+      return input.value;
+    }).join('');
     onChange && onChange(res);
   };
 
-  const handleOnChange = e => {
-    const {
-      target: {
-        value,
-        nextElementSibling
-      }
-    } = e;
+  var handleOnChange = function handleOnChange(e) {
+    var _e$target = e.target,
+        value = _e$target.value,
+        nextElementSibling = _e$target.nextElementSibling;
 
     if (value.length > 1) {
       e.target.value = value.charAt(0);
@@ -97,16 +105,14 @@ const AuthCode = forwardRef(({
     sendResult();
   };
 
-  const handleOnKeyDown = e => {
-    const {
-      key
-    } = e;
-    const target = e.target;
+  var handleOnKeyDown = function handleOnKeyDown(e) {
+    var key = e.key;
+    var target = e.target;
 
     if (key === 'Backspace') {
       if (target.value === '') {
         if (target.previousElementSibling !== null) {
-          const t = target.previousElementSibling;
+          var t = target.previousElementSibling;
           t.value = '';
           t.focus();
           e.preventDefault();
@@ -119,17 +125,17 @@ const AuthCode = forwardRef(({
     }
   };
 
-  const handleOnFocus = e => {
+  var handleOnFocus = function handleOnFocus(e) {
     e.target.select();
   };
 
-  const handleOnPaste = e => {
-    const pastedValue = e.clipboardData.getData('Text');
-    let currentInput = 0;
+  var handleOnPaste = function handleOnPaste(e) {
+    var pastedValue = e.clipboardData.getData('Text');
+    var currentInput = 0;
 
-    for (let i = 0; i < pastedValue.length; i++) {
-      const pastedCharacter = pastedValue.charAt(i);
-      const currentValue = inputsRef.current[currentInput].value;
+    for (var i = 0; i < pastedValue.length; i++) {
+      var pastedCharacter = pastedValue.charAt(i);
+      var currentValue = inputsRef.current[currentInput].value;
 
       if (pastedCharacter.match(inputProps.pattern)) {
         if (!currentValue) {
@@ -147,9 +153,9 @@ const AuthCode = forwardRef(({
     e.preventDefault();
   };
 
-  const inputs = [];
+  var inputs = [];
 
-  for (let i = 0; i < _length; i++) {
+  var _loop = function _loop(i) {
     inputs.push(React.createElement("input", Object.assign({
       key: i,
       onChange: handleOnChange,
@@ -157,16 +163,21 @@ const AuthCode = forwardRef(({
       onFocus: handleOnFocus,
       onPaste: handleOnPaste
     }, inputProps, {
-      type: _isPassword ? 'password' : inputProps.type,
-      ref: el => {
+      type: isPassword ? 'password' : inputProps.type,
+      ref: function ref(el) {
         inputsRef.current[i] = el;
       },
       maxLength: 1,
       className: inputClassName,
       autoComplete: i === 0 ? 'one-time-code' : 'off',
-      "aria-label": ariaLabel ? `${ariaLabel}. Character ${i + 1}.` : `Character ${i + 1}.`,
-      disabled: disabled
+      "aria-label": ariaLabel ? ariaLabel + ". Character " + (i + 1) + "." : "Character " + (i + 1) + ".",
+      disabled: disabled,
+      placeholder: placeholder
     })));
+  };
+
+  for (var i = 0; i < length; i++) {
+    _loop(i);
   }
 
   return React.createElement("div", {

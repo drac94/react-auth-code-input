@@ -7,15 +7,16 @@ import React, {
 
 const allowedCharactersValues = ['alpha', 'numeric', 'alphanumeric'] as const;
 
-type Props = {
+export type AuthCodeProps = {
   allowedCharacters?: typeof allowedCharactersValues[number];
   ariaLabel?: string;
   autoFocus?: boolean;
-  disabled?: boolean;
-  length?: number;
   containerClassName?: string;
+  disabled?: boolean;
   inputClassName?: string;
   isPassword?: boolean;
+  length?: number;
+  placeholder?: string;
   onChange: (res: string) => void;
 };
 
@@ -58,17 +59,18 @@ const propsMap: { [key: string]: InputProps } = {
   }
 };
 
-const AuthCode = forwardRef<AuthCodeRef, Props>(
+const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
   (
     {
       allowedCharacters = 'alphanumeric',
       ariaLabel,
       autoFocus = true,
-      disabled,
-      length = 6,
       containerClassName,
+      disabled,
       inputClassName,
       isPassword = false,
+      length = 6,
+      placeholder,
       onChange
     },
     ref
@@ -204,6 +206,7 @@ const AuthCode = forwardRef<AuthCodeRef, Props>(
               : `Character ${i + 1}.`
           }
           disabled={disabled}
+          placeholder={placeholder}
         />
       );
     }
