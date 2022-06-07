@@ -131,8 +131,14 @@ This component supports autofill from SMS's received, tested on Safari and Chrom
 | `onChange`           | Function(value: String) | Callback function called every time an input value changes. |                | Required                                         |
 | `isPassword`         | Boolean                 | Whether to display the inputs as passwords or not.          | false          |                                                  |
 | `disabled`           | Boolean                 | Makes all the inputs disabled if true.                      | false          | Since version 3.1.1                              |
+| `placeholder`        | String                  | Displays a placeholder in all the inputs.                   |                | Since version 3.2.0                              |
 
 ## Changelog
+
+### 3.2.0
+
+- Add `placeholder` prop.
+- Export component props.
 
 ### 3.1.0
 
