@@ -1,15 +1,33 @@
 import React, { useRef, useState } from 'react';
 
-import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
+import AuthCode, { AuthCodeRef, AuthCodeProps } from 'react-auth-code-input';
 import './index.css';
+
+const allowedCharactersMap = [
+  { id: 'alphanumeric', name: 'Letters & Numbers' },
+  { id: 'alpha', name: 'Only Letters' },
+  { id: 'numeric', name: 'Only Numbers' }
+];
 
 const App = () => {
   const AuthInputRef = useRef<AuthCodeRef>(null);
   const [result, setResult] = useState<string>('');
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
+  const [allowedCharacters, setAllowedCharacters] = useState<
+    AuthCodeProps['allowedCharacters']
+  >('alphanumeric');
   const handleOnChange = (res: string) => {
     setResult(res);
+  };
+
+  const handleAllowedCharactersChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { id } = e.currentTarget;
+    // @ts-ignore
+    setAllowedCharacters(id);
+    setResult('');
   };
 
   return (
@@ -50,6 +68,8 @@ const App = () => {
             <br /> Authentication
           </h1>
           <AuthCode
+            key={allowedCharacters}
+            allowedCharacters={allowedCharacters}
             ref={AuthInputRef}
             onChange={handleOnChange}
             containerClassName='container'
@@ -62,27 +82,47 @@ const App = () => {
             your devices. Enter the code to continue.
           </p>
           <p>Code: {result}</p>
-          <div className='controls'>
-            <div>
-              <input
-                type='checkbox'
-                id='isPassword'
-                name='isPassword'
-                onChange={(e) => setIsPassword(e.target.checked)}
-              />
-              <label htmlFor='isPassword'>Password</label>
+          <div className='props'>
+            <div className='options'>
+              <div>
+                <input
+                  type='checkbox'
+                  id='isPassword'
+                  name='isPassword'
+                  onChange={(e) => setIsPassword(e.target.checked)}
+                />
+                <label htmlFor='isPassword'>Password</label>
+              </div>
+              <div>
+                <input
+                  type='checkbox'
+                  id='disabled'
+                  name='disabled'
+                  onChange={(e) => setDisabled(e.target.checked)}
+                />
+                <label htmlFor='disabled'>Disabled</label>
+              </div>
+              <button onClick={() => AuthInputRef.current?.focus()}>
+                Focus
+              </button>
+              <button onClick={() => AuthInputRef.current?.clear()}>
+                Clear
+              </button>
             </div>
-            <div>
-              <input
-                type='checkbox'
-                id='disabled'
-                name='disabled'
-                onChange={(e) => setDisabled(e.target.checked)}
-              />
-              <label htmlFor='disabled'>Disabled</label>
+            <div className='allowed-characters'>
+              {allowedCharactersMap.map((aC) => (
+                <div key={aC.id}>
+                  <input
+                    type='radio'
+                    id={aC.id}
+                    name='allowedRadio'
+                    onChange={handleAllowedCharactersChange}
+                    checked={allowedCharacters === aC.id}
+                  />
+                  <label htmlFor={aC.id}>{aC.name}</label>
+                </div>
+              ))}
             </div>
-            <button onClick={() => AuthInputRef.current?.focus()}>Focus</button>
-            <button onClick={() => AuthInputRef.current?.clear()}>Clear</button>
           </div>
         </div>
       </div>

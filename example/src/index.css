@@ -62,10 +62,17 @@ p {
   line-height: 1.47059;
 }
 
-.controls {
+.props {
+  border: 1px solid #d6d6d6;
+  padding: 8px 16px;
+}
+
+.options {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #d6d6d6;
-  padding: 8px 16px;
+}
+
+.allowed-characters {
+  text-align: left;
 }
