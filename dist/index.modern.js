@@ -13,7 +13,7 @@ const propsMap = {
     pattern: '[a-zA-Z0-9]{1}'
   },
   numeric: {
-    type: 'number',
+    type: 'tel',
     inputMode: 'numeric',
     pattern: '[0-9]{1}',
     min: '0',

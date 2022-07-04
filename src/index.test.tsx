@@ -247,37 +247,35 @@ describe('AuthCode', () => {
       const onChangeFn = jest.fn();
       render(<AuthCode allowedCharacters='numeric' onChange={onChangeFn} />);
 
-      const input = screen.getAllByRole('spinbutton')[0] as HTMLInputElement;
+      const input = screen.getAllByRole('textbox')[0] as HTMLInputElement;
 
       userEvent.type(input, 'a');
-      expect(input).toHaveValue(null);
+      expect(input).toHaveValue('');
     });
 
     it('should allow only one character for input', async () => {
       const onChangeFn = jest.fn();
       render(<AuthCode allowedCharacters='numeric' onChange={onChangeFn} />);
 
-      const input = screen.getAllByRole('spinbutton')[0] as HTMLInputElement;
+      const input = screen.getAllByRole('textbox')[0] as HTMLInputElement;
 
       userEvent.type(input, '1');
+      userEvent.type(input, '{arrowright}');
       userEvent.type(input, '2');
-      expect(input).toHaveValue(1);
+      expect(input).toHaveValue('1');
 
+      userEvent.type(input, '{arrowright}');
       userEvent.type(input, 'B');
-      expect(input).toHaveValue(1);
-      expect(onChangeFn).toHaveBeenCalledTimes(2);
+      expect(input).toHaveValue('1');
+      expect(onChangeFn).toHaveBeenCalledTimes(3);
     });
 
     it('should paste all the characters', async () => {
       const onChangeFn = jest.fn();
       render(<AuthCode allowedCharacters='numeric' onChange={onChangeFn} />);
 
-      const firstInput = screen.getAllByRole(
-        'spinbutton'
-      )[0] as HTMLInputElement;
-      const lastInput = screen.getAllByRole(
-        'spinbutton'
-      )[5] as HTMLInputElement;
+      const firstInput = screen.getAllByRole('textbox')[0] as HTMLInputElement;
+      const lastInput = screen.getAllByRole('textbox')[5] as HTMLInputElement;
 
       const paste = createEvent.paste(firstInput, {
         clipboardData: {
@@ -287,8 +285,8 @@ describe('AuthCode', () => {
 
       fireEvent(firstInput, paste);
 
-      expect(firstInput).toHaveValue(1);
-      expect(lastInput).toHaveValue(6);
+      expect(firstInput).toHaveValue('1');
+      expect(lastInput).toHaveValue('6');
       expect(onChangeFn).toHaveBeenCalledTimes(1);
     });
 
@@ -296,12 +294,8 @@ describe('AuthCode', () => {
       const onChangeFn = jest.fn();
       render(<AuthCode allowedCharacters='numeric' onChange={onChangeFn} />);
 
-      const firstInput = screen.getAllByRole(
-        'spinbutton'
-      )[0] as HTMLInputElement;
-      const lastInput = screen.getAllByRole(
-        'spinbutton'
-      )[5] as HTMLInputElement;
+      const firstInput = screen.getAllByRole('textbox')[0] as HTMLInputElement;
+      const lastInput = screen.getAllByRole('textbox')[5] as HTMLInputElement;
 
       const paste = createEvent.paste(firstInput, {
         clipboardData: {
@@ -311,8 +305,8 @@ describe('AuthCode', () => {
 
       fireEvent(firstInput, paste);
 
-      expect(firstInput).toHaveValue(1);
-      expect(lastInput).toHaveValue(8);
+      expect(firstInput).toHaveValue('1');
+      expect(lastInput).toHaveValue('8');
       expect(onChangeFn).toHaveBeenCalledTimes(1);
     });
 
@@ -326,12 +320,8 @@ describe('AuthCode', () => {
         />
       );
 
-      const firstInput = screen.getAllByRole(
-        'spinbutton'
-      )[0] as HTMLInputElement;
-      const lastInput = screen.getAllByRole(
-        'spinbutton'
-      )[4] as HTMLInputElement;
+      const firstInput = screen.getAllByRole('textbox')[0] as HTMLInputElement;
+      const lastInput = screen.getAllByRole('textbox')[4] as HTMLInputElement;
 
       const paste = createEvent.paste(firstInput, {
         clipboardData: {
@@ -341,8 +331,8 @@ describe('AuthCode', () => {
 
       fireEvent(firstInput, paste);
 
-      expect(firstInput).toHaveValue(1);
-      expect(lastInput).toHaveValue(5);
+      expect(firstInput).toHaveValue('1');
+      expect(lastInput).toHaveValue('5');
       expect(onChangeFn).toHaveBeenCalledTimes(1);
     });
   });

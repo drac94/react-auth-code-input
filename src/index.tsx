@@ -22,7 +22,7 @@ export type AuthCodeProps = {
 
 type InputMode = 'text' | 'numeric';
 
-type InputType = 'text' | 'number' | 'password';
+type InputType = 'text' | 'tel' | 'password';
 
 type InputProps = {
   type: InputType;
@@ -51,7 +51,7 @@ const propsMap: { [key: string]: InputProps } = {
   },
 
   numeric: {
-    type: 'number',
+    type: 'tel',
     inputMode: 'numeric',
     pattern: '[0-9]{1}',
     min: '0',
