@@ -135,6 +135,10 @@ This component supports autofill from SMS's received, tested on Safari and Chrom
 
 ## Changelog
 
+### 3.2.1
+
+- Fix allowing non-numeric characters being introduced in numeric mode on Safari and Firefox.
+
 ### 3.2.0
 
 - Add `placeholder` prop.
