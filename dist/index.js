@@ -23,6 +23,17 @@ var propsMap = {
     max: '9'
   }
 };
+var valueValidation = {
+  alpha: function alpha(value) {
+    return /^[a-zA-Z]*$/.test(value);
+  },
+  alphanumeric: function alphanumeric(value) {
+    return /^[a-zA-Z0-9]*$/.test(value);
+  },
+  numeric: function numeric(value) {
+    return /^[0-9]*$/.test(value);
+  }
+};
 var AuthCode = React.forwardRef(function (_ref, ref) {
   var _ref$allowedCharacter = _ref.allowedCharacters,
       allowedCharacters = _ref$allowedCharacter === void 0 ? 'alphanumeric' : _ref$allowedCharacter,
@@ -37,7 +48,9 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
       _ref$length = _ref.length,
       length = _ref$length === void 0 ? 6 : _ref$length,
       placeholder = _ref.placeholder,
-      onChange = _ref.onChange;
+      onChange = _ref.onChange,
+      value = _ref.value;
+  var values = value ? value.split('') : [];
 
   if (isNaN(length) || length < 1) {
     throw new Error('Length should be a number and greater than 0');
@@ -47,6 +60,14 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
     return value === allowedCharacters;
   })) {
     throw new Error('Invalid value for allowedCharacters. Use alpha, numeric, or alphanumeric');
+  }
+
+  if (value && value.length > length) {
+    throw new Error('Value length should not be greater than length');
+  }
+
+  if (value && !valueValidation[allowedCharacters](value)) {
+    throw new Error("Value should only contain " + allowedCharacters + " characters");
   }
 
   var inputsRef = React.useRef([]);
@@ -126,6 +147,10 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
 
       sendResult();
     }
+
+    if (key === 'Tab' && target.value === '') {
+      e.preventDefault();
+    }
   };
 
   var handleOnFocus = function handleOnFocus(e) {
@@ -175,7 +200,8 @@ var AuthCode = React.forwardRef(function (_ref, ref) {
       autoComplete: i === 0 ? 'one-time-code' : 'off',
       "aria-label": ariaLabel ? ariaLabel + ". Character " + (i + 1) + "." : "Character " + (i + 1) + ".",
       disabled: disabled,
-      placeholder: placeholder
+      placeholder: placeholder,
+      defaultValue: values[i] || ''
     })));
   };
 

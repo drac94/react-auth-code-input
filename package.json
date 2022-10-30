@@ -1,6 +1,6 @@
 {
   "name": "react-auth-code-input",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "One-time password (OTP) React input component, uncontrolled, zero dependencies, fully tested.",
   "author": "drac94",
   "license": "MIT",

@@ -114,6 +114,22 @@ const App = () => {
 };
 ```
 
+## Passing a value
+
+```tsx
+import React, { useState } from 'react';
+import AuthCode from 'react-auth-code-input';
+
+const App = () => {
+  const [result, setResult] = useState('');
+  const handleOnChange = (res: string) => {
+    setResult(res);
+  };
+
+  return <AuthCode value={result} onChange={handleOnChange} />;
+};
+```
+
 ## SMS Autofill
 
 This component supports autofill from SMS's received, tested on Safari and Chrome in iOS.
@@ -134,6 +150,11 @@ This component supports autofill from SMS's received, tested on Safari and Chrom
 | `placeholder`        | String                  | Displays a placeholder in all the inputs.                   |                | Since version 3.2.0                              |
 
 ## Changelog
+
+### 3.2.1
+
+- Block tab if current code position is not filled
+- Added possibility to pass a value prop
 
 ### 3.2.1
 
