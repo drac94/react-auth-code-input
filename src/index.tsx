@@ -108,6 +108,7 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
     useEffect(() => {
       if (autoFocus) {
         inputsRef.current[0].focus();
+          setFocusPosition(0)
       }
     }, []);
 
@@ -140,18 +141,30 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
     const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
       const { key } = e;
       const target = e.target as HTMLInputElement;
-      if (key === 'Backspace') {
-        if (target.value === '') {
-          if (target.previousElementSibling !== null) {
-            const t = target.previousElementSibling as HTMLInputElement;
-            t.value = '';
-            t.focus();
-            e.preventDefault();
+
+      switch (key) {
+        case 'Backspace': {
+          if (target.value === '') {
+            if (target.previousElementSibling !== null) {
+              const t = target.previousElementSibling as HTMLInputElement;
+              t.value = '';
+              t.focus();
+              e.preventDefault();
+            }
+          } else {
+            target.value = '';
           }
-        } else {
-          target.value = '';
+          sendResult();
         }
-        sendResult();
+
+        // Handle left / right traversal
+        case 'ArrowLeft': {
+          target.previousElementSibling?.focus()
+        }
+
+        case 'ArrowRight': {
+          target.nextElementSibling?.focus()
+        }
       }
     };
 
