@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "react": "link:../node_modules/react",
+    "react": "0.14.10",
     "react-auth-code-input": "link:..",
-    "react-dom": "link:../node_modules/react-dom",
+    "react-dom": "0.14.10",
     "react-scripts": "link:../node_modules/react-scripts"
   },
   "scripts": {
