@@ -1,3 +1,7 @@
+
+> [!IMPORTANT]  
+> After much consideration, I've come to the difficult decision that I will no longer be able to maintain this project due to my current time constraints. I sincerely apologize for any inconvenience this may cause and appreciate the understanding and support from the community. It's been a rewarding journey, and I'm grateful for the contributions and engagement of all involved. Thank you for your understanding.
+
 ![image](https://user-images.githubusercontent.com/1719915/159784302-4bb83708-e993-4800-9bcf-091ecb709ef7.png)
 
 # React Auth Code Input
