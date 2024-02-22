@@ -2,7 +2,8 @@ import React, {
   useRef,
   useEffect,
   useImperativeHandle,
-  forwardRef
+  forwardRef,
+  ChangeEvent
 } from 'react';
 
 const allowedCharactersValues = ['alpha', 'numeric', 'alphanumeric'] as const;
@@ -183,6 +184,31 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
       e.preventDefault();
     };
 
+    const handleOnInput = (event: ChangeEvent<HTMLInputElement>) => {
+      if (!event.target.value) return;
+      const {
+        target: { value },
+      } = event;
+      let currentInput = 0;
+
+      if (event.target.value && event.target.value.length === length) {
+        for (let i = 0; i < value.length; i++) {
+          const pastedCharacter = value.charAt(i);
+          if (pastedCharacter.match(inputProps.pattern)) {
+            inputsRef.current[currentInput].value = pastedCharacter;
+            if (inputsRef.current[currentInput].nextElementSibling !== null) {
+              (
+                inputsRef.current[currentInput]
+                  .nextElementSibling as HTMLInputElement
+              ).focus();
+              currentInput++;
+            }
+          }
+        }
+        sendResult();
+      }
+    };
+
     const inputs = [];
     for (let i = 0; i < length; i++) {
       inputs.push(
@@ -192,12 +218,12 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
           onKeyDown={handleOnKeyDown}
           onFocus={handleOnFocus}
           onPaste={handleOnPaste}
+          onInput={handleOnInput}
           {...inputProps}
           type={isPassword ? 'password' : inputProps.type}
           ref={(el: HTMLInputElement) => {
             inputsRef.current[i] = el;
           }}
-          maxLength={1}
           className={inputClassName}
           autoComplete={i === 0 ? 'one-time-code' : 'off'}
           aria-label={
