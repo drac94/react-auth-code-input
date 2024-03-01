@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-import AuthCode, { AuthCodeRef, AuthCodeProps } from 'react-auth-code-input';
+import AuthCode, { AuthCodeProps, AuthCodeRef } from 'react-auth-code-input';
 import './index.css';
 
 const allowedCharactersMap = [
@@ -63,10 +63,10 @@ const App = () => {
       </p>
       <div>
         <div>
-          <h1>
+          <h2>
             Two-Factor
             <br /> Authentication
-          </h1>
+          </h2>
           <AuthCode
             key={allowedCharacters}
             allowedCharacters={allowedCharacters}
@@ -84,7 +84,7 @@ const App = () => {
           <p>Code: {result}</p>
           <div className='props'>
             <div className='options'>
-              <div>
+              <div className='props-input-container'>
                 <input
                   type='checkbox'
                   id='isPassword'
@@ -93,7 +93,8 @@ const App = () => {
                 />
                 <label htmlFor='isPassword'>Password</label>
               </div>
-              <div>
+
+              <div className='props-input-container'>
                 <input
                   type='checkbox'
                   id='disabled'
@@ -102,16 +103,19 @@ const App = () => {
                 />
                 <label htmlFor='disabled'>Disabled</label>
               </div>
+
               <button onClick={() => AuthInputRef.current?.focus()}>
                 Focus
               </button>
+
               <button onClick={() => AuthInputRef.current?.clear()}>
                 Clear
               </button>
             </div>
+
             <div className='allowed-characters'>
               {allowedCharactersMap.map((aC) => (
-                <div key={aC.id}>
+                <div className='props-input-container' key={aC.id}>
                   <input
                     type='radio'
                     id={aC.id}

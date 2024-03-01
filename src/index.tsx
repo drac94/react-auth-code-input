@@ -1,8 +1,8 @@
 import React, {
-  useRef,
+  forwardRef,
   useEffect,
   useImperativeHandle,
-  forwardRef
+  useRef
 } from 'react';
 
 const allowedCharactersValues = ['alpha', 'numeric', 'alphanumeric'] as const;
@@ -18,6 +18,7 @@ export type AuthCodeProps = {
   length?: number;
   placeholder?: string;
   onChange: (res: string) => void;
+  value?: string;
 };
 
 type InputMode = 'text' | 'numeric';
@@ -59,6 +60,12 @@ const propsMap: { [key: string]: InputProps } = {
   }
 };
 
+const valueValidation = {
+  alpha: (value: string) => /^[a-zA-Z]*$/.test(value),
+  alphanumeric: (value: string) => /^[a-zA-Z0-9]*$/.test(value),
+  numeric: (value: string) => /^[0-9]*$/.test(value)
+};
+
 const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
   (
     {
@@ -71,10 +78,13 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
       isPassword = false,
       length = 6,
       placeholder,
-      onChange
+      onChange,
+      value
     },
     ref
   ) => {
+    const values = value ? value.split('') : [];
+
     if (isNaN(length) || length < 1) {
       throw new Error('Length should be a number and greater than 0');
     }
@@ -82,6 +92,16 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
     if (!allowedCharactersValues.some((value) => value === allowedCharacters)) {
       throw new Error(
         'Invalid value for allowedCharacters. Use alpha, numeric, or alphanumeric'
+      );
+    }
+
+    if (value && value.length > length) {
+      throw new Error('Value length should not be greater than length');
+    }
+
+    if (value && !valueValidation[allowedCharacters](value)) {
+      throw new Error(
+        `Value should only contain ${allowedCharacters} characters`
       );
     }
 
@@ -153,6 +173,10 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
         }
         sendResult();
       }
+
+      if (key === 'Tab' && target.value === '') {
+        e.preventDefault();
+      }
     };
 
     const handleOnFocus = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -207,6 +231,7 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
           }
           disabled={disabled}
           placeholder={placeholder}
+          defaultValue={values[i] || ''}
         />
       );
     }
